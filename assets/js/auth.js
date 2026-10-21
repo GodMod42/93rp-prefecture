@@ -6,7 +6,7 @@ const PREFECTORAL_ROLE_ID = "1555233694183194764";
 
 /* ===== Popup « site non officiel » =====
    Affichée sur toutes les pages qui chargent auth.js. Modifie les textes et réglages ici. */
-const LGP_DISCLAIMER = {
+const 93RP_DISCLAIMER = {
   enabled: true,        // false = désactive complètement la popup
   everyPage: true,      // true = à chaque changement de page ; false = une seule fois par session
   showOnAdmin: false,   // true = l'affiche aussi sur le panneau d'administration
@@ -32,8 +32,8 @@ function logout(){
 }
 
 (function(){
-  const c=LGP_DISCLAIMER;
-  if(!c.enabled||(window.LGP_ADMIN&&!c.showOnAdmin))return;
+  const c=93RP_DISCLAIMER;
+  if(!c.enabled||(window.93RP_ADMIN&&!c.showOnAdmin))return;
   try{if(!c.everyPage&&sessionStorage.getItem("lgp_disclaimer_ok"))return}catch(e){}
 
   const show=()=>{
