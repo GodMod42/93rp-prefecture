@@ -1,10 +1,10 @@
-# Identité visuelle — Préfecture de Police 93RP
+# Identité visuelle — Préfecture de Police LGP
 
 ## Direction
 
 Portail de services communautaires du Grand Paname. Le site doit évoquer la clarté, la fiabilité et l'accès direct aux démarches. La refonte conserve le logo, les textes, les fonctions, la Marianne existante et le code bleu/blanc/rouge.
 
-Le langage visuel s'inspire des surfaces nettes, des filets fins et de la hiérarchie typographique de l'étude IBM Carbon fournie par le plugin Awesome DESIGN.md. C'est une référence de méthode, pas une reprise de l'identité IBM. Le résultat reste propre au site 93RP et à son univers français.
+Le langage visuel s'inspire des surfaces nettes, des filets fins et de la hiérarchie typographique de l'étude IBM Carbon fournie par le plugin Awesome DESIGN.md. C'est une référence de méthode, pas une reprise de l'identité IBM. Le résultat reste propre au site LGP et à son univers français.
 
 ## Tokens
 
