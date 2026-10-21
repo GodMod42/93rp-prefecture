@@ -566,7 +566,10 @@ function start(){
   setInterval(refreshBadges,60000);
 }
 </script>
-<script type="module">import { inject } from "https://esm.sh/@vercel/analytics"; inject();</script>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <script src="/tracker.js" defer></script>
 <script src="assets/js/reveal.js"></script>
 </body>

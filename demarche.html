@@ -84,6 +84,7 @@ footer{background:var(--pied);color:#ddd;font-size:.92rem}
   <link rel="stylesheet" href="assets/css/site-refresh.css">
 <script>
   window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -183,7 +184,7 @@ document.querySelectorAll("#faq .faq-item > button").forEach(button=>button.addE
 try{const theme=localStorage.getItem("theme");if(theme)document.documentElement.dataset.theme=theme}catch(e){}
 document.getElementById("theme").onclick=()=>{const theme=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=theme;try{localStorage.setItem("theme",theme)}catch(e){}};
 </script>
-<script type="module">import { inject } from "https://esm.sh/@vercel/analytics"; inject();</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <script src="/tracker.js" defer></script>
 </html>
 <script src="assets/js/reveal.js"></script>
