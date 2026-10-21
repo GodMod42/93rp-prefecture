@@ -133,6 +133,7 @@ footer{background:var(--pied);color:#ddd;font-size:.92rem}
   <link rel="stylesheet" href="assets/css/site-refresh.css">
 <script>
   window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -305,7 +306,7 @@ SITE.ready.then(data=>{
   revealObserve(b);
 });
 </script>
-<script type="module">import { inject } from "https://esm.sh/@vercel/analytics"; inject();</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <script src="/tracker.js" defer></script>
 <script src="assets/js/reveal.js"></script>
 </body>

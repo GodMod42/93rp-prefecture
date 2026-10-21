@@ -193,6 +193,7 @@ footer{background:var(--pied);color:#ddd;font-size:.92rem}
   <link rel="stylesheet" href="assets/css/site-refresh.css">
 <script>
   window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -320,7 +321,7 @@ async function loadTickets(){
   }catch(e){list.textContent=e.message==="discord_auth_unavailable"?"Discord ne répond pas pour le moment. Réessayez dans un instant.":e.message==="database_not_configured"?"Le stockage des demandes n’est pas encore relié à Vercel.":"Impossible de charger les demandes. Réessayez plus tard."}
 }
 </script>
-<script type="module">import { inject } from "https://esm.sh/@vercel/analytics"; inject();</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <script src="/tracker.js" defer></script>
 </html>
 <script src="assets/js/reveal.js"></script>
