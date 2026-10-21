@@ -1,0 +1,21 @@
+{
+  "name": "lgp-prefecture-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:botid": "esbuild src/botid-src.js --bundle --format=esm --minify --outfile=botid.js",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=18.14.0"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0"
+  },
+  "devDependencies": {
+    "vercel": "latest"
+  }
+}

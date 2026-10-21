@@ -1,0 +1,573 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/assets/img/favicon2.png">
+<meta name="robots" content="noindex, nofollow">
+<title>Préfecture de LGP — Panel préfectoral</title>
+<style>
+:root{--bleu:#000091;--lav:#e8e8fb;--fond:#f5f5f8;--carte:#fff;--texte:#161616;--gris:#666;--ligne:#ddd;--ok:#18753c;--warn:#b34000;--err:#ce0500;--sans:Marianne,"Public Sans","Segoe UI",system-ui,sans-serif}
+:root[data-theme=dark]{--bleu:#8b8bff;--lav:#26264f;--fond:#161616;--carte:#1e1e1e;--texte:#f0f0f0;--gris:#b5b5b5;--ligne:#3a3a3a;--ok:#27a658;--warn:#fc5d00;--err:#ff6b6b}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--sans);background:var(--fond);color:var(--texte);line-height:1.5}
+.top{background:var(--carte);border-top:6px solid;border-image:linear-gradient(90deg,#000091 33.3%,#fff 33.3% 66.6%,#e1000f 66.6%) 1;box-shadow:0 1px 0 var(--ligne);position:sticky;top:0;z-index:10}
+.top .in{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 24px}
+.top h1{font-size:1.15rem;margin-right:auto}
+.b{padding:9px 18px;border-radius:999px;border:1px solid var(--ligne);background:var(--carte);color:var(--texte);font:600 .88rem var(--sans);cursor:pointer;text-decoration:none;display:inline-block}
+.b:hover{background:var(--lav)}.b.p{background:#000091;color:#fff;border-color:#000091}
+:root[data-theme=dark] .b.p{background:#8b8bff;color:#000}
+.b.danger{color:var(--err);border-color:currentColor}.b.sm{padding:4px 12px;font-size:.78rem}
+.note{background:var(--lav);font-size:.85rem;padding:8px 24px}
+.lay{display:grid;grid-template-columns:250px 1fr;gap:24px;max-width:1300px;margin:0 auto;padding:24px}
+aside{position:sticky;top:120px;align-self:start;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 140px);overflow:auto}
+.nav-group{display:flex;flex-direction:column;gap:2px}.nav-group-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gris);font-weight:800;padding:6px 12px 3px}
+.nv{all:unset;box-sizing:border-box;display:flex;gap:10px;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.92rem}
+.nv:hover{background:var(--lav)}.nv.on{background:var(--bleu);color:#fff}:root[data-theme=dark] .nv.on{color:#000}
+.nv:focus-visible,.b:focus-visible{outline:3px solid #0a76f6}
+main{background:var(--carte);border:1px solid var(--ligne);border-radius:10px;padding:26px;min-width:0}
+input[type=text],input[type=search],input[type=date],input[type=datetime-local],select,textarea{width:100%;padding:9px 12px;border:1px solid var(--ligne);border-radius:6px;background:var(--carte);color:var(--texte);font:inherit;font-size:.92rem}
+textarea{resize:vertical;min-height:90px}input[type=search]{margin:16px 0 8px}
+.hero{display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:14px;margin-bottom:18px;background:linear-gradient(120deg,var(--lav),var(--carte));border:1px solid var(--ligne)}
+.hero .ic{font-size:1.7rem;width:56px;height:56px;border-radius:14px;background:var(--carte);display:grid;place-items:center;box-shadow:0 2px 8px #0002;flex:none}
+.hero h2{font-size:1.4rem}.hero p{color:var(--gris);font-size:.9rem}.hero .cnt{margin-left:auto;font-weight:800;font-size:.8rem;background:var(--bleu);color:#fff;border-radius:99px;padding:3px 12px;white-space:nowrap}
+:root[data-theme=dark] .hero .cnt{color:#000}
+.finance-company{border:1px solid var(--ligne);border-radius:10px;overflow:hidden}.finance-company>summary{padding:13px 18px;cursor:pointer;list-style:none;font-weight:700;color:var(--bleu)}.finance-company>summary::-webkit-details-marker{display:none}.finance-company[open]>summary{border-bottom:1px solid var(--ligne);background:var(--fond)}
+.finance-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:18px}.finance-field{min-width:0}.finance-field.full{grid-column:1/-1}.finance-field label{display:block;font-size:.82rem;font-weight:700;margin-bottom:5px}
+.av{--s:36px;width:var(--s);height:var(--s);border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:calc(var(--s)*.38);flex:none}
+.line{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--gris);font-size:.88rem;margin:3px 0 6px}
+.dt{white-space:pre-wrap;font-size:.88rem;color:var(--gris)}
+.foot{display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--gris);font-size:.78rem}.foot .b{margin-left:auto}
+.tag{--c:var(--bleu);display:inline-block;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--c);color:#fff}
+:root[data-theme=dark] .tag{color:#000}
+.sec,.dayh{font-size:.8rem;font-weight:800;letter-spacing:.06em;color:var(--gris);margin:22px 0 10px;text-transform:uppercase}.dayh{font-size:.95rem;text-transform:capitalize;letter-spacing:0;color:var(--texte)}
+.chip{width:auto;display:inline-block;border-radius:99px;padding:4px 12px;font-weight:700;font-size:.78rem;border:1px solid currentColor;background:color-mix(in srgb,currentColor 10%,var(--carte))}
+.c-ok{color:var(--ok)}.c-warn{color:var(--warn)}.c-err{color:var(--err)}.c-mute{color:var(--gris)}.c-bl{color:var(--bleu)}
+/* annonces */
+.ann{--c:var(--bleu);border:1px solid var(--ligne);border-left:6px solid var(--c);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.ann.warn{--c:var(--warn)}.ann.err{--c:var(--err)}.ann.first{background:color-mix(in srgb,var(--c) 7%,var(--carte))}
+.ann .tag{background:var(--c)}.ann h3{font-size:1.25rem;margin:10px 0 6px}.ann p{white-space:pre-wrap}
+/* réunions */
+.reu{display:flex;gap:18px;border:1px solid var(--ligne);border-radius:12px;padding:16px;margin-bottom:14px}.reu.past{opacity:.6}
+.cal{flex:none;width:68px;border-radius:10px;overflow:hidden;text-align:center;border:1px solid var(--ligne);align-self:flex-start}
+.cal i{display:block;font-style:normal;background:var(--bleu);color:#fff;font-size:.7rem;font-weight:800;padding:3px 0;text-transform:uppercase}
+:root[data-theme=dark] .cal i{color:#000}
+.cal b{display:block;font-size:1.7rem;line-height:1.2;padding-top:4px}.cal span{display:block;font-size:.72rem;color:var(--gris);padding-bottom:6px}
+.reu h3{font-size:1.1rem}.odj{margin:4px 0 0 18px;font-size:.9rem}
+/* rendez-vous */
+.rdv{display:grid;grid-template-columns:60px 1fr;gap:14px;margin-bottom:10px}.rdv.past{opacity:.55}
+.rdv .t{font-weight:800;text-align:right;padding-top:14px}
+.rdv .c{border:1px solid var(--ligne);border-left:4px solid var(--bleu);border-radius:10px;padding:10px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.x{flex:1;min-width:150px}
+/* dossiers */
+.dos{display:grid;grid-template-columns:100px 1fr auto auto;gap:14px;align-items:center;border:1px solid var(--ligne);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.ref{font-family:ui-monospace,Consolas,monospace;font-weight:700;color:var(--bleu);font-size:.85rem}
+.bar{height:8px;border-radius:99px;background:var(--fond);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%}
+/* tuiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.tile{border:1px solid var(--ligne);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.ft{width:44px;height:52px;border-radius:6px 14px 6px 6px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.8rem}
+.sticky{--t:#fff3a8;--r:0deg;background:var(--t);border:0;box-shadow:2px 4px 10px #0003;transform:rotate(var(--r));color:#161616}.sticky .foot{color:#444}.sticky p{white-space:pre-wrap}
+.look img,.look .ph{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px;background:var(--fond);display:grid;place-items:center;font-size:2.4rem}
+.ctc{align-items:center;text-align:center}.ctc .line{margin:0;justify-content:center}
+.abs{display:flex;gap:14px;align-items:center;border:1px solid var(--ligne);border-radius:12px;padding:12px 14px;margin-bottom:10px}.abs .x{flex:1}
+.vide{text-align:center;color:var(--gris);padding:40px 10px}.vide b{display:block;font-size:2rem}
+/* chat */
+.chat{display:grid;grid-template-columns:170px 1fr;border:1px solid var(--ligne);border-radius:12px;overflow:hidden;height:min(640px,calc(100vh - 280px));min-height:440px}
+.rooms{background:var(--fond);border-right:1px solid var(--ligne);padding:10px;display:flex;flex-direction:column;gap:2px}
+.room{all:unset;box-sizing:border-box;padding:9px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem}.room:hover{background:var(--lav)}.room.on{background:var(--bleu);color:#fff}
+:root[data-theme=dark] .room.on{color:#000}
+.conv{display:flex;flex-direction:column;min-width:0}.ch{padding:12px 16px;border-bottom:1px solid var(--ligne);font-weight:800}.ch small{font-weight:400;color:var(--gris);margin-left:8px}
+.msgs{flex:1;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:3px}
+.day{align-self:center;font-size:.72rem;font-weight:700;color:var(--gris);background:var(--fond);border-radius:99px;padding:2px 12px;margin:12px 0 6px}
+.m{display:flex;gap:10px;align-items:flex-end;max-width:80%}.m.me{align-self:flex-end;flex-direction:row-reverse}.m .av{--s:32px;visibility:hidden}.m.first .av{visibility:visible}.m.first{margin-top:8px}
+.who{font-size:.74rem;font-weight:700;color:var(--gris);margin:0 0 2px 4px}
+.bub{padding:8px 13px;border-radius:16px 16px 16px 4px;background:var(--lav);overflow-wrap:anywhere;white-space:pre-wrap;position:relative}
+.me .bub{background:var(--bleu);color:#fff;border-radius:16px 16px 4px 16px}:root[data-theme=dark] .me .bub{color:#000}
+.m time{font-size:.66rem;color:var(--gris);padding-bottom:3px}
+.m .x2{all:unset;cursor:pointer;opacity:0;font-size:.8rem;color:var(--err);padding:0 4px}.m:hover .x2{opacity:1}
+.comp{display:flex;gap:10px;padding:12px;border-top:1px solid var(--ligne);align-items:flex-end}.comp textarea{min-height:44px;height:44px;border-radius:22px;padding:11px 16px}
+@media(max-width:700px){.finance-form{grid-template-columns:1fr}.finance-field.full{grid-column:auto}.dos{grid-template-columns:1fr}.chat{grid-template-columns:1fr;height:70vh}.rooms{flex-direction:row;overflow:auto;border-right:0;border-bottom:1px solid var(--ligne)}.reu{flex-direction:column}}
+@media(max-width:800px){.lay{grid-template-columns:1fr}aside{position:static;max-height:none;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));align-items:start}}
+.ico{display:inline-flex;vertical-align:-3px;flex:none}.it{display:inline-flex;align-items:center;gap:5px}
+.nv{align-items:center}.hero .ic{color:var(--bleu)}.vide .ico{display:flex;justify-content:center;margin-bottom:8px}.look .ph{color:var(--gris)}
+img.av{object-fit:cover;background:var(--fond)}.me-chip{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.85rem}
+.svc-card{display:flex;gap:18px;align-items:center;flex-wrap:wrap;border:1px solid var(--ligne);border-left:6px solid var(--gris);border-radius:14px;padding:20px 22px;margin-bottom:18px}
+.svc-card.on{border-left-color:var(--ok);background:color-mix(in srgb,var(--ok) 7%,var(--carte))}.svc-card .x{flex:1;min-width:200px}.svc-card h3{font-size:1.2rem}
+.pulse{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--ok);margin-right:8px;animation:pl 1.8s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 55%,transparent)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:8px}
+.kpi{border:1px solid var(--ligne);border-radius:12px;padding:14px 16px}.kpi b{display:block;font-size:1.5rem;line-height:1.2}.kpi span{font-size:.74rem;color:var(--gris);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.agent{display:flex;align-items:center;gap:12px;border:1px solid var(--ligne);border-radius:12px;padding:10px 14px;margin-bottom:8px}.agent .x{flex:1;min-width:0}
+.clk{font-variant-numeric:tabular-nums;font-weight:800;color:var(--ok)}
+.hist{display:flex;gap:14px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--ligne);font-size:.9rem}
+.btn-big{padding:12px 26px;font-size:1rem}
+.relay{display:flex;gap:12px;align-items:flex-start;background:var(--lav);border-left:4px solid var(--bleu);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:.9rem;color:var(--bleu)}
+.relay b{display:block}.relay span{color:var(--texte)}
+.dchip{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:700;color:var(--bleu);border:1px solid var(--bleu);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.toast{position:fixed;right:20px;bottom:24px;max-width:360px;background:var(--texte);color:var(--carte);padding:12px 18px;border-radius:10px;font-size:.9rem;box-shadow:0 8px 24px #0004;z-index:60;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}.toast.on{opacity:1;transform:none}
+/* modules repris du panel admin */
+.sub{color:var(--gris);font-size:.9rem;margin-bottom:14px}.bad{color:var(--err);font-weight:600}
+.ticket-tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}
+.ticket{border:1px solid var(--ligne);border-radius:9px;background:var(--carte);margin:10px 0;overflow:hidden}.ticket>summary{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;list-style:none}.ticket>summary::-webkit-details-marker,.ticket-category>summary::-webkit-details-marker{display:none}.ticket-summary-main{flex:1;min-width:0}.ticket-summary-main strong{display:block;overflow-wrap:anywhere}.ticket-summary-meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;color:var(--gris);font-size:.82rem}.ticket-status{flex:none;border-radius:20px;padding:3px 10px;background:var(--lav);font-size:.78rem;font-weight:700}.ticket-status.closed{background:var(--fond);color:var(--gris)}.ticket-content{padding:4px 16px 16px;border-top:1px solid var(--ligne)}.ticket-head{margin:10px 0}.ticket-message{border-left:3px solid var(--ligne);background:var(--fond);border-radius:0 7px 7px 0;padding:10px 12px;margin:10px 0}.ticket-message.staff{border-color:var(--bleu)}.ticket-message-head{display:flex;justify-content:space-between;gap:10px;color:var(--gris);font-size:.8rem;font-weight:700}.ticket-message-text{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:5px}.ticket textarea{min-height:80px;margin:8px 0}.ticket small{color:var(--gris)}.demo-badge{font-size:.75rem;font-weight:800;color:var(--bleu)}
+.ticket-category{border:1px solid var(--ligne);border-radius:9px;margin:12px 0;padding:0 12px 8px}.ticket-category>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;font-weight:700;color:var(--bleu);cursor:pointer;list-style:none}.ticket-category[open]>summary{border-bottom:1px solid var(--ligne)}
+.finance-company{margin:12px 0}.finance-company>summary{display:flex;align-items:center;justify-content:space-between;gap:12px}.finance-head-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0}.finance-meta{padding:0 18px 14px;color:var(--gris);font-size:.78rem}.finance-save{font-size:.8rem;color:var(--gris)}
+.nv .badge{margin-left:auto;min-width:22px;text-align:center;background:#e1000f;color:#fff;border-radius:999px;padding:1px 8px;font-size:.72rem;font-weight:800;line-height:1.5}
+</style>
+<script>window.LGP_ADMIN=true</script>
+<script src="assets/js/site.js"></script>
+<link rel="stylesheet" href="assets/css/site-refresh.css">
+<script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body class="admin-panel">
+<div id="gate" style="max-width:560px;margin:80px auto;padding:0 24px" hidden></div>
+<div id="app" hidden>
+  <div class="top"><div class="in">
+    <h1>Panel préfectoral</h1>
+    <span class="me-chip" id="me"></span>
+    <a class="b" href="index.html" style="text-decoration:none">← Retour au site</a>
+    <a class="b" href="admin.html" id="lk-admin" hidden style="text-decoration:none">← Panneau d'administration</a>
+    <a class="b" href="dashboard.html" style="text-decoration:none">← Mon espace</a>
+    <button class="b p" id="rf" type="button">Actualiser</button>
+  </div>
+  <div class="note" id="st">Espace réservé aux agents de la Préfecture. Les données sont enregistrées automatiquement.</div></div>
+  <div class="lay"><aside id="nav"></aside><main id="pane"></main></div>
+</div>
+
+<script src="assets/js/auth.js"></script>
+<script>
+/* ===== À CONFIGURER ===== */
+const PAGE_CONNEXION = "connexion.html";
+const SALONS = ["Général","Cabinet","Inspection","Administration"];   // salons de l'onglet Discussion
+
+/* Modules : champs [clé, libellé, type, options]. Types : text | area | date | datetime | select | url */
+const MODS={
+ service:{i:"service",n:"Prise de service",d:"Prenez votre service, voyez qui est en poste et suivez votre temps de présence."},
+ annonce:{i:"annonce",n:"Annonces",d:"Communications officielles adressées aux agents de la Préfecture.",f:[["objet","Objet","text"],["importance","Niveau","select",["Information","Important","Urgent"]],["portee","Destinataires","select",["Tous les agents","Cabinet","Inspection","Administration"]],["texte","Contenu","area"]]},
+ reunion:{i:"reunion",n:"Réunions",d:"Convocations, lieux et ordres du jour.",f:[["objet","Objet","text"],["quand","Date et heure","datetime"],["lieu","Lieu ou salon vocal","text"],["odj","Ordre du jour (un point par ligne)","area"]]},
+ discussion:{i:"discussion",n:"Discussion",d:"Messagerie interne entre agents, par salon."},
+ rdv:{i:"rdv",n:"Rendez-vous",d:"Rendez-vous avec les services, entreprises et citoyens.",f:[["avec","Interlocuteur","text"],["quand","Date et heure","datetime"],["objet","Objet","text"],["statut","Statut","select",["À confirmer","Confirmé","Reporté","Terminé"]]]},
+ dossier:{i:"dossier",n:"Suivi de dossier",d:"Instruction des demandes : référence, agent en charge et avancement.",f:[["ref","Référence","text"],["intitule","Intitulé du dossier","text"],["resp","Agent en charge","text"],["statut","Statut","select",["Ouvert","En cours","Clos","Refusé"]],["suivi","Dernière mise à jour","area"]]},
+ document:{i:"document",n:"Documents",d:"Arrêtés, modèles, courriers et pièces de référence.",f:[["intitule","Intitulé","text"],["type","Type","select",["Arrêté","Modèle","Courrier","Rapport","Autre"]],["lien","Lien du document (Google Doc, PDF…)","url"]]},
+ notes:{i:"notes",n:"Notes",d:"Notes de service et mémos internes.",f:[["sujet","Sujet","text"],["texte","Note","area"]]},
+ tenues:{i:"tenues",n:"Tenues",d:"Tenues réglementaires par grade.",f:[["nom","Nom de la tenue","text"],["grade","Grade concerné","select",["Préfet de Police","Sous-Préfet","Directeur de cabinet","Secrétaire Général","Attaché d'administration","Secrétaire administratif","Inspecteur IGPN","Huissier de Justice","Inspecteur"]],["lien","Lien de l'image","url"],["detail","Composition (haut, bas, accessoires)","area"]]},
+ absence:{i:"absence",n:"Absences",d:"Déclarations d'absence des agents.",f:[["agent","Agent","text"],["du","Du","date"],["au","Au","date"],["motif","Motif","text"]]},
+ annuaire:{i:"annuaire",n:"Annuaire",d:"Coordonnées des agents de la Préfecture.",f:[["nom","Nom Prénom","text"],["grade","Grade","text"],["tel","Téléphone","text"],["discord","Pseudo Discord","text"]]},
+ contact:{i:"discussion",n:"Demandes de contact",d:"Demandes générales reçues via le formulaire « Nous contacter »."},
+ procedures:{i:"dossier",n:"Démarches en ligne",d:"Déclarations et formulaires de démarches, regroupés par type."},
+ finances:{i:"document",n:"Finances publiques",d:"Direction Générale des Finances Publiques : fiches fiscales des entreprises."},
+ svcadmin:{i:"service",n:"Gestion des services",d:"Classement, statistiques et gestion des prises de service.",admin:true}
+};
+const RELAY={annonce:"annonces",reunion:"réunions",rdv:"rendez-vous",absence:"absences"};   /* modules relayés sur Discord (webhook) */
+const GROUPS=[["Service",["service"]],["Communication",["annonce","reunion","discussion"]],["Agenda et dossiers",["rdv","dossier","document","notes"]],["Personnel",["tenues","absence","annuaire"]],["Administration",["contact","procedures","finances","svcadmin"]]];
+
+try{const t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+const $=s=>document.querySelector(s);
+const E=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const gate=h=>{const g=$("#gate");g.hidden=false;g.innerHTML=h};
+const fmt=(t,v)=>!v?"":t==="date"?new Date(v).toLocaleDateString("fr-FR"):t==="datetime"?new Date(v).toLocaleString("fr-FR",{dateStyle:"long",timeStyle:"short"}):v;
+const safeUrl=v=>/^https?:\/\//i.test(v||"")?v:"#";
+const T=x=>new Date(x||0).getTime();
+const byNew=a=>[...a].sort((x,y)=>T(y.created_at)-T(x.created_at));
+const hm=d=>new Date(d).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
+const D0=d=>{const x=new Date(d);x.setHours(0,0,0,0);return x};
+const dayLabel=d=>{const n=Math.round((D0(d)-D0(new Date()))/864e5);return n===0?"Aujourd'hui":n===1?"Demain":n===-1?"Hier":new Date(d).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})};
+const P={
+ annonce:'<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a8.5 8.5 0 0 1 0 12"/>',
+ reunion:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',
+ discussion:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/>',
+ rdv:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ dossier:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+ document:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+ notes:'<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+ tenues:'<path d="M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/>',
+ absence:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18M10 14l4 4M14 14l-4 4"/>',
+ annuaire:'<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c.8-2 2.3-3 4-3s3.2 1 4 3"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+ warn:'<path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/>',
+ urgent:'<path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z"/><path d="M12 8v5M12 16h.01"/>',
+ pin:'<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+ phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+ at:'<circle cx="12" cy="12" r="4"/><path d="M16 12v1.5a2.5 2.5 0 0 0 5 0V12a9 9 0 1 0-3.5 7.1"/>',
+ service:'<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M16 11l2 2 4-4"/>',
+ send:'<path d="M21 3L3 10l7 3 3 7z"/><path d="M10 13l11-10"/>'
+};
+const ico=(n,s=18)=>{const e=E("span","ico");e.innerHTML='<svg viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(P[n]||"")+'</svg>';return e};
+const li=(i,t)=>{const e=E("span","it");e.append(ico(i,15),document.createTextNode(String(t)));return e};
+const row=(...a)=>{const d=E("div","line");a.forEach(([i,t])=>d.append(li(i,t)));return d};
+const dur=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+" h "+String(m).padStart(2,"0"):m?m+" min":s+" s"};
+let toastT;const toast=t=>{let e=$("#toast");if(!e){e=E("div","toast");e.id="toast";e.setAttribute("role","status");document.body.append(e)}e.textContent=t;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("on"),4500)};
+const ini=(n,s)=>{const e=E("span","av",(String(n||"?").trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("")||"?").toUpperCase());let h=0;for(const c of String(n||""))h=(h*31+c.charCodeAt(0))%360;e.style.cssText="--s:"+s+"px;background:hsl("+h+" 45% 38%)";return e};
+const av=(n,s=36,url)=>{if(/^https:\/\/cdn\.discordapp\.com\//.test(url||"")){const i=E("img","av");i.src=url;i.alt="";i.loading="lazy";i.style.setProperty("--s",s+"px");i.onerror=()=>i.replaceWith(ini(n,s));return i}return ini(n,s)};
+
+const u=getUser();
+const myId=()=>String(u.id||u.discord_id||u.user_id||"");
+const myName=()=>u.nick||u.nickname||(u.member&&u.member.nick)||u.global_name||u.username||u.name||"Agent";
+const myAvatar=()=>{const a=u.avatar||u.avatar_url||"";if(/^https:/.test(a))return a;return a&&myId()?"https://cdn.discordapp.com/avatars/"+myId()+"/"+a+".png?size=64":""};
+const isMine=x=>x.mine!==undefined?x.mine:(x.author_id&&myId()?String(x.author_id)===myId():x.author===myName());
+if(!u) location.replace(PAGE_CONNEXION);
+else if(!(typeof isPrefectoral==="function"?isPrefectoral(u):isSiteAdmin(u))){
+  gate('<h2>Accès réservé</h2><p style="margin:12px 0">Le panel préfectoral est réservé aux membres portant le rôle Discord Préfectoral. Vérifie que tu es connecté avec le bon compte.</p><p style="margin-top:16px"><a href="index.html" style="text-decoration:underline">Retour au site</a></p>');
+}else start();
+
+/* ===== Stockage : API du site, ou navigateur si l'API n'existe pas encore ===== */
+const store=(()=>{
+  let off=false;
+  const lk=m=>"lgp_pref_"+m,lr=m=>{try{return JSON.parse(localStorage.getItem(lk(m))||"[]")}catch(e){return[]}},lw=(m,v)=>{try{localStorage.setItem(lk(m),JSON.stringify(v))}catch(e){}};
+  const api=async(method,m,body)=>{
+    const r=await fetch("/api/prefecture?module="+m,{method,headers:{Authorization:"Bearer "+u.token,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});
+    const d=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(d.error||r.status);e.status=r.status;throw e}return d};
+  const run=async(method,m,body,local)=>{
+    if(!off){try{return await api(method,m,body)}catch(e){
+      if(e.status===401||e.status===403)throw e;
+      off=true;const why=String(e.status||e.message||"aucune réponse")+(e.status&&e.message&&e.message!==String(e.status)?" – "+e.message:"");$("#st").innerHTML="<b>Mode local</b> : l'API /api/prefecture a répondu « "+why.replace(/[<>&]/g,"")+" ». Les données restent dans ce navigateur et ne sont pas partagées entre agents."}}
+    return local()};
+  const me=()=>myName();
+  return{
+    list:m=>run("GET",m,null,()=>lr(m)),
+    add:(m,it)=>run("POST",m,it,()=>{const v=lr(m);v.unshift({...it,id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),author:me(),author_id:myId(),avatar:myAvatar(),created_at:new Date().toISOString()});lw(m,v)}),
+    patch:(m,id,ch)=>run("PATCH",m,{id,...ch},()=>{const v=lr(m),i=v.findIndex(x=>x.id===id);if(i>-1)Object.assign(v[i],ch);lw(m,v)}),
+    del:(m,id)=>run("DELETE",m,{id},()=>lw(m,lr(m).filter(x=>x.id!==id))),
+    svc:(method,body)=>api(method,"service",body),
+    me};
+})();
+
+/* ===== Modules repris du panel admin ===== */
+const showTicketAttachments=(c,att)=>{(att||[]).forEach(f=>{if(!f?.data||!f?.name)return;const l=E("a","",`📎 ${f.name}`);l.href=f.data;l.download=f.name;l.target="_blank";l.rel="noopener noreferrer";l.style.cssText="display:block;margin-top:6px;color:var(--bleu);overflow-wrap:anywhere";c.append(l)})};
+const readTicketAttachments=files=>Promise.all([...files].map(file=>{if(file.size>1024*1024)throw new Error("Chaque pièce jointe doit faire 1 Mo maximum.");if(!["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","image/jpeg","image/png","image/webp","text/plain"].includes(file.type))throw new Error("Format de pièce jointe non accepté.");return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res({name:file.name,type:file.type,size:file.size,data:r.result});r.onerror=()=>rej(new Error("Impossible de lire une pièce jointe."));r.readAsDataURL(file)})})).then(items=>{if(items.reduce((s,i)=>s+i.size,0)>2.5*1024*1024)throw new Error("La taille totale des pièces jointes ne peut pas dépasser 2,5 Mo.");return items});
+const procedureName=t=>{const p="Démarche en ligne — ";if(t.subject?.startsWith(p))return t.subject.slice(p.length).replace(/ \[TEST\]$/," ").trim()||"Autres démarches";if(t.subject?.startsWith("Création d'entreprise —"))return "Création d'entreprise";return "Autres démarches"};
+const ticketCard=(ticket,{call,reload})=>{
+  const card=E("details","ticket"),summary=E("summary"),main=E("div","ticket-summary-main");
+  const meta=E("div","ticket-summary-meta");
+  meta.append(E("span","","Réf. "+(ticket.reference||"—")),E("span","",ticket.requester_name||"Demandeur inconnu"),E("span","",ticket.discord_username||""),E("span","",new Date(ticket.created_at||Date.now()).toLocaleString("fr-FR")));
+  main.append(E("strong","",ticket.subject?.replace(/^Démarche en ligne — /,"Démarche : ")||"Demande sans objet"),meta);summary.append(main);
+  if(ticket.is_test)summary.append(E("span","demo-badge","TEST"));
+  summary.append(E("span","ticket-status"+(ticket.status==="Fermé"?" closed":""),ticket.status||"Ouvert"));card.append(summary);
+  const body=E("div","ticket-content");
+  body.append(E("div","ticket-head",ticket.motif+" · "+(ticket.phone?"Téléphone : "+ticket.phone:"Aucun téléphone renseigné")));
+  (ticket.messages||[]).forEach(m=>{const staff=m.sender==="prefecture",r=E("div","ticket-message"+(staff?" staff":"")),h=E("div","ticket-message-head");
+    h.append(E("span","",(staff?"Réponse de la Préfecture":"Message du demandeur")+(m.author?" · "+m.author:"")),E("span","",m.createdAt?new Date(m.createdAt).toLocaleString("fr-FR"):""));
+    r.append(h,E("div","ticket-message-text",m.text||"(Message vide)"));showTicketAttachments(r,m.attachments);body.append(r)});
+  if(ticket.status==="Ouvert"){
+    const area=E("textarea");area.placeholder="Rédige une réponse claire…";area.setAttribute("aria-label","Réponse au demandeur");
+    const picker=E("input");picker.type="file";picker.multiple=true;picker.accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.txt";
+    const hint=E("small","","Pièces jointes : PDF, Word, JPG, PNG, WebP ou TXT — 1 Mo par fichier, 2,5 Mo au total.");
+    const actions=E("div","ticket-tools"),send=E("button","b p","Envoyer la réponse");send.type="button";
+    send.onclick=async()=>{if(!area.value.trim()&&!picker.files.length)return;send.disabled=true;try{const attachments=await readTicketAttachments(picker.files);const r=await call("POST",{reference:ticket.reference,text:area.value,attachments});if(!r.discordNotified)alert("Réponse enregistrée sur le site. Discord n’a pas reçu sa notification.");await reload()}catch(e){alert("Impossible d’enregistrer la réponse : "+e.message);send.disabled=false}};
+    const close=E("button","b","Clôturer cette demande");close.type="button";close.onclick=async()=>{if(!confirm("Clôturer la demande "+ticket.reference+" ?"))return;close.disabled=true;try{await call("PATCH",{reference:ticket.reference});await reload()}catch(e){alert("Impossible de clôturer : "+e.message);close.disabled=false}};
+    actions.append(send,close);body.append(area,hint,picker,actions);
+  }
+  const del=E("button","b danger","Supprimer cette demande");del.type="button";
+  del.onclick=async()=>{if(!confirm("Supprimer définitivement la demande "+ticket.reference+" ? Elle disparaîtra aussi de « Mes démarches » chez le demandeur. Action irréversible."))return;del.disabled=true;try{await call("DELETE",{reference:ticket.reference});await reload()}catch(e){alert("Impossible de supprimer : "+e.message);del.disabled=false}};
+  const wrap=E("div","ticket-tools");wrap.append(del);body.append(wrap);
+  if(!ticket.discord_notified)body.append(E("p","bad","Notification Discord non délivrée. La demande reste conservée sur le site."));
+  card.append(body);return card;
+};
+const drawTickets=(p,ticketType)=>{
+  const procedures=ticketType==="procedure",title=procedures?"Démarches en ligne":"Demandes de contact",root=E("div");p.append(root);
+  const call=async(method,body)=>{const r=await fetch("/api/admin/tickets",{method,headers:{Authorization:"Bearer "+u.token,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||String(r.status));return d};
+  const run=async()=>{
+    root.textContent="";
+    root.append(E("p","sub",procedures?"Les déclarations et formulaires de démarches sont regroupés ici par type.":"Les demandes générales sont séparées des démarches administratives. Ouvre une fiche pour lire la conversation et répondre."));
+    const controls=E("div","ticket-tools"),refresh=E("button","b","Actualiser"),expand=E("button","b","Tout développer"),collapse=E("button","b","Tout replier"),closeAll=E("button","b danger","Clôturer toutes les demandes ouvertes de cet onglet"),deleteAll=E("button","b danger","Supprimer toutes les demandes de cet onglet"),box=E("div");
+    refresh.type=expand.type=collapse.type=closeAll.type=deleteAll.type="button";refresh.onclick=run;
+    expand.onclick=()=>box.querySelectorAll("details").forEach(i=>i.open=true);collapse.onclick=()=>box.querySelectorAll("details").forEach(i=>i.open=false);
+    closeAll.onclick=async()=>{if(!confirm("Clôturer toutes les demandes ouvertes de l’onglet « "+title+" » ?"))return;closeAll.disabled=true;try{const r=await call("PATCH",{closeAll:true,ticketType});alert(r.closed+" demande(s) clôturée(s).");await run()}catch(e){alert("Impossible de clôturer les demandes : "+e.message);closeAll.disabled=false}};
+    deleteAll.onclick=async()=>{if(!confirm("Supprimer DÉFINITIVEMENT toutes les demandes de l’onglet « "+title+" » (ouvertes et clôturées) ? Action irréversible."))return;if(prompt("Pour confirmer, tape SUPPRIMER")!=="SUPPRIMER")return;deleteAll.disabled=true;try{const r=await call("DELETE",{all:true,ticketType});alert(r.deleted+" demande(s) supprimée(s).");await run()}catch(e){alert("Impossible de supprimer les demandes : "+e.message);deleteAll.disabled=false}};
+    controls.append(refresh,expand,collapse,closeAll,deleteAll);root.append(controls,box);
+    box.append(E("p","sub","Chargement des demandes…"));
+    try{
+      const all=await call("GET"),tickets=all.filter(t=>procedures?t.motif==="Déclaration / démarche":t.motif!=="Déclaration / démarche");box.textContent="";
+      if(!tickets.length){box.append(E("p","sub","Aucune demande ouverte ou archivée dans cette rubrique."));return}
+      if(procedures){
+        const cats=new Map();tickets.forEach(t=>{const n=procedureName(t);if(!cats.has(n))cats.set(n,[]);cats.get(n).push(t)});
+        [...cats.entries()].sort(([a],[b])=>a.localeCompare(b,"fr")).forEach(([name,items])=>{
+          const g=E("details","ticket-category"),l=E("summary"),oc=items.filter(t=>t.status==="Ouvert").length;
+          l.append(E("span","",name),E("span","ticket-status",`${items.length} demande(s) · ${oc} ouverte(s)`));g.append(l);
+          items.forEach(t=>g.append(ticketCard(t,{call,reload:run})));box.append(g)});
+      }else tickets.forEach(t=>box.append(ticketCard(t,{call,reload:run})));
+    }catch(e){box.textContent=e.message==="admin_required"?"Ton compte n’a pas l’autorisation d’accéder aux demandes.":e.message==="discord_auth_unavailable"?"Discord ne répond pas pour le moment. Réessaie dans un instant.":e.message==="database_not_configured"?"La base de données n’est pas encore reliée au projet Vercel.":"Impossible de charger les demandes. Vérifie le stockage Vercel et réessaie."}
+  };
+  run();
+};
+const drawFinances=async p=>{
+  p.append(E("p","sub","Les déclarations de création d’entreprise reçues sont ajoutées automatiquement. Tu peux aussi créer une fiche manuellement. Tout est sauvegardé automatiquement dans la base du site."));
+  const tools=E("div","finance-head-tools"),add=E("button","b p","Ajouter une entreprise"),status=E("span","finance-save","Chargement des dossiers…"),list=E("div");
+  add.type="button";tools.append(add,status);p.append(tools,list);
+  const api=async(method,body)=>{const r=await fetch("/api/admin/finances",{method,headers:{Authorization:"Bearer "+u.token,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||String(r.status));return d};
+  const showError=e=>status.textContent=e.message==="database_not_configured"?"Stockage de la base non configuré dans Vercel.":"Erreur de sauvegarde ou de chargement. Réessaie.";
+  const renderCompany=company=>{
+    const details=E("details","finance-company"),summary=E("summary"),sName=E("span","",company.company_name),sStatus=E("span","ticket-status",company.tax_status);
+    summary.append(sName,sStatus);details.append(summary);
+    const form=E("div","finance-form"),saveState=E("span","finance-save","Enregistré");
+    const mk=(label,value,{kind="input",full=false,options=[]}={})=>{
+      const w=E("div","finance-field"+(full?" full":"")),cap=E("label","",label);let i;
+      if(kind==="select"){i=E("select");options.forEach(o=>i.add(new Option(o,o)));i.value=value||options[0]}
+      else if(kind==="area"){i=E("textarea");i.value=value||""}
+      else{i=E("input");i.type="text";i.value=value||""}
+      w.append(cap,i);form.append(w);return i};
+    const name=mk("Entreprise",company.company_name),taxStatus=mk("Statut des impôts",company.tax_status,{kind:"select",options:["Non renseigné","À jour","À régulariser","En attente","En contrôle"]}),period=mk("Période fiscale suivie",company.tax_period),taxDetails=mk("Déclarations, montants ou échéances",company.tax_details,{kind:"area",full:true}),investigation=mk("Enquête ou contrôle potentiel",company.investigation,{kind:"area",full:true}),notes=mk("Notes internes",company.notes,{kind:"area",full:true});
+    const meta=E("div","finance-meta");meta.append(saveState);if(company.source_reference)meta.append(E("span",""," · Déclaration initiale : "+company.source_reference));form.append(meta);
+    const remove=E("button","b danger","Supprimer cette fiche");remove.type="button";remove.style.margin="0 18px 18px";
+    remove.onclick=async()=>{if(!confirm("Supprimer la fiche de "+company.company_name+" ?"))return;remove.disabled=true;try{await api("DELETE",{id:company.id});details.remove();if(!list.children.length)list.append(E("p","sub","Aucune entreprise enregistrée."));status.textContent="Fiche supprimée."}catch(e){showError(e);remove.disabled=false}};
+    details.append(form,remove);
+    let timer,saving=Promise.resolve();
+    const schedule=()=>{clearTimeout(timer);saveState.textContent="Modification en attente…";status.textContent="Modifications en cours…";
+      timer=setTimeout(()=>{const payload={id:company.id,company_name:name.value,tax_status:taxStatus.value,tax_period:period.value,tax_details:taxDetails.value,investigation:investigation.value,notes:notes.value};
+        saving=saving.then(()=>api("PATCH",payload)).then(up=>{Object.assign(company,up);sName.textContent=up.company_name;sStatus.textContent=up.tax_status;saveState.textContent="Enregistré automatiquement · "+new Date(up.updated_at).toLocaleTimeString("fr-FR");status.textContent="Toutes les modifications sont enregistrées."}).catch(e=>{saveState.textContent="Échec — modification non enregistrée";showError(e)})},650)};
+    [name,taxStatus,period,taxDetails,investigation,notes].forEach(i=>{i.addEventListener("input",schedule);i.addEventListener("change",schedule)});
+    return details};
+  add.onclick=async()=>{const n=prompt("Nom de l'entreprise à ajouter :");if(!n?.trim())return;add.disabled=true;try{const c=await api("POST",{company_name:n});if(list.querySelector("p"))list.textContent="";const card=renderCompany(c);card.open=true;list.prepend(card);status.textContent="Entreprise ajoutée et enregistrée."}catch(e){showError(e)}finally{add.disabled=false}};
+  try{const cs=await api("GET");list.textContent="";if(!cs.length)list.append(E("p","sub","Aucune entreprise enregistrée. Ajoute une fiche pour commencer."));cs.forEach(c=>list.append(renderCompany(c)));status.textContent=cs.length+" entreprise(s) · sauvegarde automatique activée."}catch(e){list.textContent="";showError(e)}
+};
+const drawServiceAdmin=async p=>{
+  if(!isSiteAdmin(u)){p.append(E("p","bad","Cette rubrique est réservée aux membres du rôle Staff (administrateurs)."));return}
+  if(!document.getElementById("svc-css")){const st=document.createElement("style");st.id="svc-css";st.textContent=`
+.svc-k{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.svc-k div{border:1px solid var(--ligne);border-radius:10px;padding:14px 16px;background:var(--carte)}
+.svc-k b{display:block;font-size:1.5rem;line-height:1.2}.svc-k span{font-size:.75rem;color:var(--gris);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.svc-h{font-size:1.05rem;margin:26px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--ligne)}
+.svc-r{display:flex;align-items:center;gap:12px;border:1px solid var(--ligne);border-radius:10px;padding:10px 14px;margin-bottom:8px;background:var(--carte)}
+.svc-r .x{flex:1;min-width:0}.svc-r small{color:var(--gris);display:block}
+.svc-rk{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.85rem;background:var(--fond);color:var(--gris);flex:none}
+.svc-r.t1 .svc-rk{background:#f5c542;color:#4a3500}.svc-r.t2 .svc-rk{background:#c9ced6;color:#2b2f36}.svc-r.t3 .svc-rk{background:#d99a6c;color:#3d2410}
+.svc-bar{height:7px;border-radius:99px;background:var(--fond);overflow:hidden;margin-top:6px}.svc-bar i{display:block;height:100%;background:var(--bleu)}
+.svc-av{width:38px;height:38px;border-radius:50%;object-fit:cover;background:var(--bleu);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.8rem;flex:none}`;document.head.append(st)}
+  p.append(E("p","sub","Classement, statistiques et gestion des prises de service. Un service oublié est clôturé automatiquement au bout de 12 h."));
+  const tools=E("div","ticket-tools"),per=E("select"),rf=E("button","b","Actualiser"),stopAll=E("button","b danger","Clôturer tous les services en cours"),reset=E("button","b danger","Remettre les statistiques à zéro"),box=E("div");
+  [["week","Cette semaine"],["month","Ce mois-ci"],["all","Depuis toujours"]].forEach(([v,l])=>per.add(new Option(l,v)));
+  per.style.width="auto";per.setAttribute("aria-label","Période du classement");rf.type=stopAll.type=reset.type="button";
+  tools.append(per,rf,stopAll,reset);p.append(tools,box);
+  const api=async(method,body,qs="")=>{const r=await fetch("/api/prefecture?module=service_admin"+qs,{method,headers:{Authorization:"Bearer "+u.token,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||String(r.status));return d};
+  const dur=s=>{s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+" h "+String(m).padStart(2,"0"):m+" min"};
+  const when=d=>new Date(d).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"});
+  const ini2=n=>E("span","svc-av",(String(n||"?").trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("")||"?").toUpperCase());
+  const pic=(n,url)=>{if(/^https:\/\/cdn\.discordapp\.com\//.test(url||"")){const i=E("img","svc-av");i.src=url;i.alt="";i.onerror=()=>i.replaceWith(ini2(n));return i}return ini2(n)};
+  const FIN={agent:"Terminé par l'agent",admin:"Clôturé par un administrateur",auto:"Fin automatique (oubli)"};
+  const load=async()=>{
+    box.textContent="Chargement…";
+    try{
+      const d=await api("GET",null,"&period="+per.value),t=d.totals;box.textContent="";
+      const k=E("div","svc-k");
+      [["En service maintenant",d.on_duty.length],["Heures de service",dur(t.seconds)],["Services effectués",t.sessions],["Durée moyenne",t.sessions?dur(t.seconds/t.sessions):"—"],["Agents actifs",t.agents]].forEach(([l,v])=>{const e=E("div");e.append(E("b","",String(v)),E("span","",l));k.append(e)});
+      box.append(k,E("h3","svc-h","Classement"));
+      if(!d.board.length)box.append(E("p","sub","Aucun service sur cette période."));
+      const top=d.board[0]?d.board[0].seconds||1:1;
+      d.board.forEach((a,i)=>{const r=E("div","svc-r"+(i<3?" t"+(i+1):"")),x=E("div","x"),bar=E("div","svc-bar"),f=E("i");f.style.width=Math.max(2,a.seconds/top*100)+"%";bar.append(f);
+        x.append(E("strong","",a.name||"Agent"),E("small","",a.sessions+" service(s) · moyenne "+dur(a.seconds/a.sessions)+" · dernier : "+when(a.last_seen)),bar);
+        r.append(E("span","svc-rk",String(i+1)),pic(a.name,a.avatar),x,E("strong","",dur(a.seconds)));box.append(r)});
+      box.append(E("h3","svc-h","En service actuellement"));
+      if(!d.on_duty.length)box.append(E("p","sub","Aucun agent en service."));
+      d.on_duty.forEach(s=>{const r=E("div","svc-r"),x=E("div","x"),b=E("button","b danger","Forcer la fin");b.type="button";
+        x.append(E("strong","",s.name||"Agent"),E("small","","Depuis "+when(s.started_at)+" ("+dur(s.seconds)+")"+(s.note?" · "+s.note:"")));
+        b.onclick=async()=>{if(!confirm("Mettre fin au service de "+(s.name||"cet agent")+" ?"))return;try{await api("PATCH",{id:s.id});await load()}catch(e){alert("Impossible : "+e.message)}};
+        r.append(pic(s.name,s.avatar),x,b);box.append(r)});
+      box.append(E("h3","svc-h","Derniers services"));
+      if(!d.recent.length)box.append(E("p","sub","Aucun service enregistré."));
+      d.recent.forEach(s=>{const r=E("div","svc-r"),x=E("div","x"),b=E("button","b","Supprimer");b.type="button";
+        x.append(E("strong","",(s.name||"Agent")+" · "+dur(s.seconds)),E("small","",when(s.started_at)+(s.ended_at?" → "+when(s.ended_at):"")+" · "+(s.ended_at?(FIN[s.ended_by]||"Terminé"):"En cours")));
+        b.onclick=async()=>{if(!confirm("Supprimer ce service des statistiques ?"))return;try{await api("DELETE",{id:s.id});await load()}catch(e){alert("Impossible : "+e.message)}};
+        r.append(pic(s.name,s.avatar),x,b);box.append(r)});
+    }catch(e){box.textContent=e.message==="admin_required"?"Ton compte n'a pas le rôle Discord Staff.":"Impossible de charger les services. Vérifie que api/prefecture.js est à jour et déployé."}
+  };
+  per.onchange=load;rf.onclick=load;
+  stopAll.onclick=async()=>{if(!confirm("Clôturer tous les services en cours ?"))return;try{const r=await api("PATCH",{all:true});alert(r.closed+" service(s) clôturé(s).");await load()}catch(e){alert("Impossible : "+e.message)}};
+  reset.onclick=async()=>{if(!confirm("Supprimer DÉFINITIVEMENT tous les services et remettre le classement à zéro ? Action irréversible."))return;if(prompt("Pour confirmer, tape RESET")!=="RESET")return;try{const r=await api("DELETE",{all:true});alert(r.deleted+" service(s) supprimé(s).");await load()}catch(e){alert("Impossible : "+e.message)}};
+  await load();
+};
+
+function start(){
+  $("#app").hidden=false;
+  if(isSiteAdmin(u))$("#lk-admin").hidden=false;
+  $("#me").append(av(myName(),28,myAvatar()),E("span","",myName()));
+  let view="service",poll=null,tick=null;
+
+  /* --- pastilles de notification (demandes de contact / démarches) --- */
+  const BADGE={contact:0,procedures:0};
+  const seenKey=t=>"lgp_pref_seen_"+t+"_"+myId();
+  const getSeen=t=>{try{const v=localStorage.getItem(seenKey(t));return v===null?null:(Number(v)||0)}catch(e){return 0}};
+  const markSeen=t=>{BADGE[t]=0;try{localStorage.setItem(seenKey(t),String(Date.now()))}catch(e){}};
+  const refreshBadges=async()=>{
+    try{
+      const r=await fetch("/api/admin/tickets",{headers:{Authorization:"Bearer "+u.token}});
+      if(!r.ok)return;
+      const all=await r.json(),before=JSON.stringify(BADGE);
+      ["contact","procedures"].forEach(t=>{
+        if(view===t){markSeen(t);return}
+        const seen=getSeen(t);
+        /* première visite de cet agent : on repart de zéro, seules les demandes futures notifient */
+        if(seen===null){markSeen(t);return}
+        BADGE[t]=all.filter(x=>!x.is_test&&x.status==="Ouvert"
+          &&(t==="procedures")===(x.motif==="Déclaration / démarche")
+          &&(x.messages||[]).slice(-1)[0]?.sender!=="prefecture"
+          &&T(x.updated_at)>seen).length;
+      });
+      if(JSON.stringify(BADGE)!==before)nav();
+    }catch(e){}
+  };
+
+  const nav=()=>{const n=$("#nav");n.textContent="";
+    GROUPS.forEach(([title,ids])=>{const g=E("section","nav-group");g.append(E("h2","nav-group-title",title));
+      ids.filter(id=>!MODS[id].admin||isSiteAdmin(u)).forEach(id=>{const b=E("button","nv"+(id===view?" on":""));b.append(ico(MODS[id].i,18),document.createTextNode(MODS[id].n));
+        if(BADGE[id]>0){const bd=E("span","badge",BADGE[id]>99?"99+":String(BADGE[id]));bd.title=BADGE[id]+" nouvelle(s) demande(s)";b.append(bd)}
+        b.type="button";b.onclick=()=>{view=id;nav();draw()};g.append(b)});n.append(g)})};
+
+  /* --- briques communes --- */
+  const delB=(it,c)=>{const b=E("button","b danger sm","Supprimer");b.type="button";
+    b.onclick=async()=>{if(!confirm("Supprimer cette entrée ? Action irréversible."))return;b.disabled=true;try{await store.del(c.mod,it.id);await c.reload()}catch(e){alert("Impossible de supprimer : "+e.message);b.disabled=false}};return b};
+  const foot=(it,c)=>{const f=E("div","foot");f.append(av(it.author,24,it.avatar),E("span","",(it.author||"—")+" · "+(it.created_at?new Date(it.created_at).toLocaleDateString("fr-FR"):"")),delB(it,c));return f};
+  const CH={"Confirmé":"ok","Terminé":"mute","À confirmer":"warn","Reporté":"err","Ouvert":"warn","En cours":"bl","Clos":"ok","Refusé":"err"};
+  const chip=(it,c,opts)=>{const s=E("select","chip");opts.forEach(o=>s.add(new Option(o,o)));s.value=it.statut||opts[0];s.setAttribute("aria-label","Statut");
+    const paint=()=>s.className="chip c-"+(CH[s.value]||"mute");paint();
+    s.onchange=async()=>{paint();try{await store.patch(c.mod,it.id,{statut:s.value});await c.reload()}catch(e){alert("Impossible de modifier le statut : "+e.message)}};return s};
+
+  /* --- rendu propre à chaque module --- */
+  const R={
+   annonce(its,box,c){byNew(its).forEach((it,i)=>{const imp=it.importance||"Information",k={Information:"",Important:"warn",Urgent:"err"}[imp]||"";
+     const a=E("article","ann "+k+(i===0?" first":"")),top=E("div","line");top.style.margin="0";
+     const tg=E("span","tag");tg.append(ico(imp==="Urgent"?"urgent":imp==="Important"?"warn":"info",13),document.createTextNode(" "+imp));top.append(tg,E("span","","Pour : "+(it.portee||"Tous les agents")));
+     a.append(top,E("h3","",it.objet),E("p","",it.texte),foot(it,c));box.append(a)})},
+   reunion(its,box,c){const now=Date.now(),up=its.filter(i=>T(i.quand)>=now-72e5).sort((a,b)=>T(a.quand)-T(b.quand)),pa=its.filter(i=>!up.includes(i)).sort((a,b)=>T(b.quand)-T(a.quand));
+     const part=(t,l,past)=>{if(!l.length)return;box.append(E("div","sec",t));l.forEach(it=>{const d=new Date(it.quand),r=E("article","reu"+(past?" past":"")),cal=E("div","cal");
+       cal.innerHTML="<i></i><b></b><span></span>";cal.children[0].textContent=d.toLocaleDateString("fr-FR",{month:"short"});cal.children[1].textContent=d.getDate();cal.children[2].textContent=d.toLocaleDateString("fr-FR",{weekday:"short"});
+       const b=E("div"),h=E("h3","",it.objet),ln=E("div","line");b.style.cssText="flex:1;min-width:0";
+       if(!past&&dayLabel(d)==="Aujourd'hui")h.append(" ",E("span","tag","Aujourd'hui"));
+       ln.append(li("rdv",hm(d)+" · "+dayLabel(d)),li("pin",it.lieu||"—"));b.append(h,ln);
+       if(it.odj){const ul=E("ul","odj");it.odj.split("\n").filter(x=>x.trim()).forEach(x=>ul.append(E("li","",x.replace(/^[-•*\s]+/,""))));b.append(E("strong","","Ordre du jour"),ul)}
+       b.append(foot(it,c));r.append(cal,b);box.append(r)})};
+     part("À venir",up);part("Passées",pa,true)},
+   rdv(its,box,c){let last="";[...its].sort((a,b)=>T(a.quand)-T(b.quand)).forEach(it=>{const d=new Date(it.quand),k=d.toDateString();
+     if(k!==last){box.append(E("div","dayh",dayLabel(d)));last=k}
+     const r=E("div","rdv"+(T(it.quand)<Date.now()?" past":"")),cd=E("div","c"),x=E("div","x");
+     x.append(E("strong","",it.avec),E("div","line",it.objet||""));cd.append(x,chip(it,c,["À confirmer","Confirmé","Reporté","Terminé"]),delB(it,c));r.append(E("div","t",hm(d)),cd);box.append(r)})},
+   dossier(its,box,c){byNew(its).forEach(it=>{const s=it.statut||"Ouvert",pct={"Ouvert":20,"En cours":60,"Clos":100,"Refusé":100}[s]||20,r=E("div","dos"),m=E("div"),bar=E("div","bar"),i=E("i");
+     m.append(E("strong","",it.intitule),E("div","line","Agent en charge : "+(it.resp||"—")));if(it.suivi)m.append(E("div","dt",it.suivi));
+     i.style.width=pct+"%";i.style.background=s==="Refusé"?"var(--err)":s==="Clos"?"var(--ok)":"var(--bleu)";bar.append(i);m.append(bar);
+     r.append(E("div","ref",it.ref||"—"),m,chip(it,c,["Ouvert","En cours","Clos","Refusé"]),delB(it,c));box.append(r)})},
+   document(its,box,c){const FT={"Arrêté":["AR","#000091"],"Modèle":["MO","#18753c"],"Courrier":["CO","#b34000"],"Rapport":["RA","#6a6af4"]},g=E("div","tiles");
+     byNew(its).forEach(it=>{const [l,col]=FT[it.type]||["··","#666"],t=E("div","tile"),f=E("div","ft",l);f.style.background=col;
+       t.append(f,E("strong","",it.intitule),E("span","line",it.type||"Autre"));
+       if(it.lien){const a=E("a","b p sm","Ouvrir le document");a.href=safeUrl(it.lien);a.target="_blank";a.rel="noopener noreferrer";t.append(a)}
+       t.append(foot(it,c));t.lastChild.style.width="100%";g.append(t)});box.append(g)},
+   notes(its,box,c){const g=E("div","tiles"),TN=["#fff3a8","#c9f0d0","#ffd6e0","#cfe3ff"];
+     byNew(its).forEach((it,i)=>{const t=E("div","tile sticky");t.style.setProperty("--t",TN[i%4]);t.style.setProperty("--r",(i%3-1)+"deg");t.append(E("strong","",it.sujet),E("p","",it.texte),foot(it,c));t.lastChild.style.width="100%";g.append(t)});box.append(g)},
+   tenues(its,box,c){const g=E("div","tiles");
+     byNew(its).forEach(it=>{const t=E("div","tile look");let im;if(safeUrl(it.lien)!=="#"){im=E("img");im.src=it.lien;im.alt=it.nom;im.loading="lazy"}else{im=E("div","ph");im.append(ico("tenues",44))}
+       t.append(im,E("span","tag",it.grade||"—"),E("strong","",it.nom));if(it.detail)t.append(E("p","dt",it.detail));t.append(foot(it,c));t.lastChild.style.width="100%";g.append(t)});box.append(g)},
+   absence(its,box,c){const now=D0(new Date());
+     [...its].sort((a,b)=>T(b.du)-T(a.du)).forEach(it=>{const du=new Date(it.du),au=new Date(it.au),n=Math.round((au-du)/864e5)+1,st=now>au?["Terminée","mute"]:now>=du?["En cours","ok"]:["À venir","bl"],r=E("div","abs"),x=E("div","x");
+       x.append(E("strong","",it.agent),row(["reunion","Du "+fmt("date",it.du)+" au "+fmt("date",it.au)+" · "+n+" j"+(it.motif?" · "+it.motif:"")]));
+       r.append(av(it.agent,40),x,E("span","chip c-"+st[1],st[0]),delB(it,c));box.append(r)})},
+   annuaire(its,box,c){const g=E("div","tiles");
+     [...its].sort((a,b)=>(a.nom||"").localeCompare(b.nom||"","fr")).forEach(it=>{const t=E("div","tile ctc");
+       t.append(av(it.nom,64),E("strong","",it.nom),E("span","tag",it.grade||"—"),row(["phone",it.tel||"—"]),row(["at",it.discord||"—"]),delB(it,c));g.append(t)});box.append(g)}
+  };
+
+  /* --- Discussion : vrai chat --- */
+  const drawChat=p=>{
+    let salon=SALONS[0],all=[],sig="";
+    const w=E("div","chat"),rooms=E("div","rooms"),conv=E("div","conv"),ch=E("div","ch"),msgs=E("div","msgs"),comp=E("div","comp"),ta=E("textarea"),send=E("button","b p","Envoyer");
+    ta.placeholder="Écrire un message… (Entrée pour envoyer, Maj+Entrée pour un retour à la ligne)";ta.setAttribute("aria-label","Message");send.type="button";
+    comp.append(ta,send);conv.append(ch,msgs,comp);w.append(rooms,conv);p.append(w);
+    const render=force=>{
+      const near=msgs.scrollHeight-msgs.scrollTop-msgs.clientHeight<90;msgs.textContent="";
+      ch.textContent="# "+salon;
+      const list=all.filter(x=>(x.salon||SALONS[0])===salon).sort((a,b)=>T(a.created_at)-T(b.created_at));
+      if(!list.length)msgs.append(E("div","vide","Aucun message dans ce salon. Lance la conversation !"));
+      let prev=null,day="";
+      list.forEach(x=>{const d=new Date(x.created_at),me=isMine(x);
+        if(d.toDateString()!==day){day=d.toDateString();msgs.append(E("div","day",dayLabel(d)));prev=null}
+        const first=!prev||prev.author!==x.author||d-new Date(prev.created_at)>3e5,row=E("div","m"+(me?" me":"")+(first?" first":"")),col=E("div"),bub=E("div","bub",x.texte);
+        if(first&&!me)col.append(E("div","who",x.author||"Agent"));
+        if(me||isSiteAdmin(u)){const del=E("button","x2","×");del.type="button";del.title="Supprimer ce message";del.onclick=async()=>{if(confirm("Supprimer ce message ?")){try{await store.del("discussion",x.id);await load()}catch(e){alert("Impossible de supprimer : "+e.message)}}};row.append(del)}
+        col.append(bub);row.prepend(E("time","",hm(d)));row.prepend(col);row.prepend(av(x.author,32,x.avatar));
+        msgs.append(row);prev=x});
+      if(force||near)msgs.scrollTop=msgs.scrollHeight};
+    const load=async force=>{try{all=await store.list("discussion");const s=JSON.stringify(all.map(x=>x.id));if(s!==sig||force){sig=s;render(force)}}catch(e){msgs.textContent="Impossible de charger la discussion."}};
+    const roomsDraw=()=>{rooms.textContent="";SALONS.forEach(s=>{const b=E("button","room"+(s===salon?" on":""),"# "+s);b.type="button";b.onclick=()=>{salon=s;roomsDraw();render(true);ta.focus()};rooms.append(b)})};
+    const go=async()=>{const t=ta.value.trim();if(!t)return;send.disabled=true;try{await store.add("discussion",{texte:t,salon});ta.value="";await load(true)}catch(e){alert("Impossible d'envoyer : "+e.message)}finally{send.disabled=false;ta.focus()}};
+    send.onclick=go;ta.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();go()}};
+    roomsDraw();load(true);
+    poll=setInterval(()=>{if(view!=="discussion"||!document.body.contains(w)){clearInterval(poll);return}load()},5000)};
+
+  /* --- Prise de service --- */
+  const drawService=async p=>{
+    const wrap=E("div");p.append(wrap);
+    let st=null,note="";
+    const clk=since=>{const k=E("span","clk");k.dataset.since=since;k.textContent=dur((Date.now()-T(since))/1000);return k};
+    const act=async(body,msg)=>{try{await store.svc("POST",body);await load();toast(typeof msg==="function"?msg():msg)}catch(e){toast("Action impossible : "+e.message)}};
+    const render=()=>{
+      wrap.textContent="";
+      const me=st.me,on=st.on_duty||[],ss=st.stats||{},c=E("div","svc-card"+(me?" on":"")),x=E("div","x"),h=E("h3");
+      c.append(av(myName(),56,myAvatar()));
+      if(me){h.append(E("span","pulse"),document.createTextNode("Vous êtes en service"));x.append(h,E("div","line","Depuis "+hm(me.started_at)+(me.note?" · "+me.note:"")));const l=E("div","line");l.append(clk(me.started_at));x.append(l)}
+      else{h.textContent="Vous êtes hors service";x.append(h,E("div","line","Prenez votre service pour apparaître parmi les agents en poste."))}
+      c.append(x);
+      if(me){const b=E("button","b danger btn-big","Terminer mon service");b.type="button";b.onclick=()=>{b.disabled=true;act({action:"stop"},()=>"Service terminé. Durée : "+dur((Date.now()-T(me.started_at))/1000)+".")};c.append(b)}
+      else{const i=E("input");i.type="text";i.placeholder="Poste ou mission (facultatif)";i.maxLength=120;i.value=note;i.style.maxWidth="260px";i.setAttribute("aria-label","Poste ou mission");i.oninput=()=>note=i.value;
+        const b=E("button","b p btn-big","Prendre mon service");b.type="button";b.onclick=()=>{b.disabled=true;act({action:"start",note},"Service pris. Bon courage !")};c.append(i,b)}
+      wrap.append(c);
+      const k=E("div","kpis");
+      [["Cette semaine",dur(ss.week_s||0)],["Temps total",dur(ss.total_s||0)],["Services effectués",String(ss.n||0)],["Agents en service",String(on.length)]].forEach(([l,v])=>{const e=E("div","kpi");e.append(E("b","",v),E("span","",l));k.append(e)});
+      wrap.append(k,E("div","sec","En service maintenant"));
+      if(!on.length)wrap.append(E("div","vide","Personne n'est en service pour le moment."));
+      on.forEach(s=>{const r=E("div","agent"),xx=E("div","x"),nm=E("strong","",s.name||"Agent");
+        if(s.mine)nm.append(" ",E("span","tag","Vous"));
+        xx.append(nm,E("div","line",(s.note?s.note+" · ":"")+"depuis "+hm(s.started_at)));
+        r.append(av(s.name,40,s.avatar),xx,clk(s.started_at));wrap.append(r)});
+      wrap.append(E("div","sec","Mes derniers services"));
+      if(!(st.recent||[]).length)wrap.append(E("div","vide","Aucun service terminé pour le moment."));
+      (st.recent||[]).forEach(s=>{const r=E("div","hist"),d=E("span","",dayLabel(s.started_at));d.style.cssText="flex:1;text-transform:capitalize";r.append(d,E("span","",hm(s.started_at)+" → "+hm(s.ended_at)),E("strong","",dur(s.seconds)));wrap.append(r)})};
+    const load=async()=>{try{st=await store.svc("GET");render()}catch(e){wrap.textContent=e.status===403?"Ton compte n'a pas le rôle Préfectoral.":"Impossible de charger le service. Réessaie dans un instant."}};
+    await load();
+    poll=setInterval(()=>{if(view!=="service"||!document.body.contains(wrap)){clearInterval(poll);clearInterval(tick);return}
+      if(document.activeElement&&document.activeElement.tagName==="INPUT"&&wrap.contains(document.activeElement))return;load()},15000);
+    tick=setInterval(()=>{if(!document.body.contains(wrap)){clearInterval(tick);return}wrap.querySelectorAll("[data-since]").forEach(e=>e.textContent=dur((Date.now()-T(e.dataset.since))/1000))},1000)};
+
+  /* --- affichage d'un module --- */
+  const draw=async()=>{
+    clearInterval(poll);clearInterval(tick);
+    const m=MODS[view],p=$("#pane"),mod=view;p.textContent="";
+    const cnt=E("span","cnt"),hero=E("div","hero"),ic=E("div","ic"),tx=E("div");ic.append(ico(m.i,28));
+    tx.append(E("h2","",m.n),E("p","",m.d));hero.append(ic,tx,cnt);
+    if(RELAY[mod]){const dc=E("span","dchip");dc.append(ico("send",13),document.createTextNode("Envoyé sur Discord"));hero.insertBefore(dc,cnt)}
+    p.append(hero);
+    if(RELAY[mod]){const rl=E("div","relay"),t=E("div");rl.append(ico("send",20));t.append(E("b","","Relais Discord actif"),E("span","","Chaque entrée enregistrée ici est aussi publiée automatiquement sur Discord, dans le salon des "+RELAY[mod]+", sous forme de message mis en forme avec ton nom."));rl.append(t);p.append(rl)}
+    if(mod==="contact"||mod==="procedures"){markSeen(mod);nav();cnt.hidden=true;return drawTickets(p,mod==="procedures"?"procedure":"contact")}
+    if(mod==="finances"){cnt.hidden=true;return drawFinances(p)}
+    if(mod==="svcadmin"){cnt.hidden=true;return drawServiceAdmin(p)}
+    if(mod==="discussion"){cnt.hidden=true;return drawChat(p)}
+    if(mod==="service"){cnt.hidden=true;return drawService(p)}
+    const add=E("details","finance-company"),form=E("form","finance-form"),inputs={};
+    m.f.forEach(([k,l,t,o])=>{
+      const w=E("div","finance-field"+(t==="area"||t==="url"?" full":"")),lab=E("label","",l);let i;
+      if(t==="area")i=E("textarea");else if(t==="select"){i=E("select");o.forEach(x=>i.add(new Option(x,x)))}
+      else{i=E("input");i.type=t==="datetime"?"datetime-local":t==="url"?"text":t;if(t==="url")i.placeholder="https://…"}
+      if(t!=="url"&&t!=="select")i.required=true;
+      inputs[k]=i;w.append(lab,i);form.append(w)});
+    const save=E("button","b p",RELAY[mod]?"Enregistrer et envoyer sur Discord":"Enregistrer"),sw=E("div","finance-field full");save.type="submit";sw.append(save);form.append(sw);
+    add.append(E("summary","","Ajouter une entrée"),form);
+    const q=E("input");q.type="search";q.placeholder="Rechercher…";q.setAttribute("aria-label","Rechercher");
+    const box=E("div");p.append(add,q,box);
+    let items=[];
+    const render=()=>{if(view!==mod)return;box.textContent="";const s=q.value.toLowerCase(),shown=items.filter(it=>!s||JSON.stringify(it).toLowerCase().includes(s));
+      cnt.textContent=items.length+(items.length>1?" entrées":" entrée");
+      if(!shown.length){const v=E("div","vide");v.append(ico(m.i,36),E("span","",s?"Aucun résultat.":"Rien ici pour le moment. Utilise « Ajouter une entrée »."));box.append(v);return}
+      R[mod](shown,box,{mod,reload:load})};
+    const load=async()=>{try{items=await store.list(mod);render()}catch(e){box.textContent=e.status===403?"Ton compte n'a pas le rôle Préfectoral.":"Impossible de charger les données. Réessaie dans un instant."}};
+    q.oninput=render;
+    form.onsubmit=async e=>{e.preventDefault();save.disabled=true;
+      try{const data={};Object.keys(inputs).forEach(k=>data[k]=inputs[k].value);const r=await store.add(mod,data);form.reset();add.open=false;await load();toast(!RELAY[mod]?"Enregistré.":r&&r._discord===true?"Enregistré et envoyé sur Discord.":r&&r._discord===false?"Enregistré, mais l'envoi sur Discord a échoué.":r&&r._discord===null?"Enregistré. Le webhook Discord de ce module n'est pas encore configuré.":"Enregistré.")}
+      catch(err){alert("Impossible d'enregistrer : "+err.message)}finally{save.disabled=false}};
+    await load()};
+
+  $("#rf").onclick=()=>{draw();refreshBadges()};
+  nav();draw();refreshBadges();
+  setInterval(refreshBadges,60000);
+}
+</script>
+<script type="module">import { inject } from "https://esm.sh/@vercel/analytics"; inject();</script>
+<script src="/tracker.js" defer></script>
+<script src="assets/js/reveal.js"></script>
+</body>
+</html>

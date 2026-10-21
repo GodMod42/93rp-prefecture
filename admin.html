@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/assets/img/favicon2.png">
+<meta name="robots" content="noindex, nofollow">
+<title>Préfecture de LGP — Panel Administrateur</title>
+<style>
+:root{--bleu:#000091;--lav:#e8e8fb;--fond:#f5f5f8;--carte:#fff;--texte:#161616;--gris:#666;--ligne:#ddd;--sans:Marianne,"Public Sans","Segoe UI",system-ui,sans-serif}
+:root[data-theme=dark]{--bleu:#8b8bff;--lav:#26264f;--fond:#161616;--carte:#1e1e1e;--texte:#f0f0f0;--gris:#b5b5b5;--ligne:#3a3a3a}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--sans);background:var(--fond);color:var(--texte);line-height:1.5}
+.top{background:var(--carte);border-top:6px solid;border-image:linear-gradient(90deg,#000091 33.3%,#fff 33.3% 66.6%,#e1000f 66.6%) 1;box-shadow:0 1px 0 var(--ligne);position:sticky;top:0;z-index:10}
+.top .in{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 24px}
+.top h1{font-size:1.15rem;margin-right:auto}
+.b{padding:9px 18px;border-radius:999px;border:1px solid var(--ligne);background:var(--carte);color:var(--texte);font:600 .88rem var(--sans);cursor:pointer}
+.b:hover{background:var(--lav)}.b.p{background:#000091;color:#fff;border-color:#000091}
+:root[data-theme=dark] .b.p{background:#8b8bff;color:#000}
+.note{background:var(--lav);color:var(--texte);font-size:.85rem;padding:8px 24px}
+.lay{display:grid;grid-template-columns:260px 1fr;gap:24px;max-width:1300px;margin:0 auto;padding:24px}
+aside{position:sticky;top:120px;align-self:start;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 140px);overflow:auto;padding-right:4px}
+.nav-group{display:flex;flex-direction:column;gap:2px}.nav-group-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gris);font-weight:800;padding:6px 12px 3px}.nav-group-items{display:grid;gap:2px}
+.nv{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;gap:8px;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.92rem}
+.nv:hover{background:var(--lav)}.nv.on{background:var(--bleu);color:#fff}:root[data-theme=dark] .nv.on{color:#000}
+.nv:focus-visible,.b:focus-visible{outline:3px solid #0a76f6}
+.nv i{font-style:normal;font-size:.75rem;background:#e1000f;color:#fff;border-radius:10px;padding:0 8px}
+.sep{height:1px;background:var(--ligne);margin:8px 0}
+main{background:var(--carte);border:1px solid var(--ligne);border-radius:10px;padding:28px;min-width:0}
+main h2{font-size:1.4rem;margin-bottom:6px}main .sub{color:var(--gris);font-size:.9rem;margin-bottom:20px}
+.f{border:1px solid var(--ligne);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.f.mod{border-color:var(--bleu);background:var(--lav)}
+.f label,.g label{display:block;font-weight:700;font-size:.82rem;margin-bottom:4px}
+.f small{display:block;color:var(--gris);font-size:.78rem;margin-top:4px}
+input[type=text],input[type=search],select,textarea{width:100%;padding:9px 12px;border:1px solid var(--ligne);border-radius:6px;background:var(--carte);color:var(--texte);font:inherit;font-size:.92rem}
+textarea{resize:vertical}
+input[type=search]{margin-bottom:16px}
+.g{margin-bottom:14px}.g.c label{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem}
+.pv{margin:8px 0 20px;border:1px dashed var(--ligne)}
+.job{border:1px solid var(--ligne);border-radius:8px;padding:14px;margin-bottom:12px}
+.job .r{display:flex;gap:8px;margin-top:10px}
+.ticket{border:1px solid var(--ligne);border-radius:9px;background:var(--carte);margin:10px 0;overflow:hidden}.ticket>summary{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;list-style:none}.ticket>summary::-webkit-details-marker,.ticket-category>summary::-webkit-details-marker{display:none}.ticket-summary-main{flex:1;min-width:0}.ticket-summary-main strong{display:block;overflow-wrap:anywhere}.ticket-summary-meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;color:var(--gris);font-size:.82rem}.ticket-status{flex:none;border-radius:20px;padding:3px 10px;background:var(--lav);font-size:.78rem;font-weight:700}.ticket-status.closed{background:var(--fond);color:var(--gris)}.ticket-content{padding:4px 16px 16px;border-top:1px solid var(--ligne)}.ticket-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.ticket-message{border-left:3px solid var(--ligne);background:var(--fond);border-radius:0 7px 7px 0;padding:10px 12px;margin:10px 0}.ticket-message.staff{border-color:var(--bleu)}.ticket-message-head{display:flex;justify-content:space-between;gap:10px;color:var(--gris);font-size:.8rem;font-weight:700}.ticket-message-text{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:5px}.ticket textarea{min-height:80px;margin:8px 0}.ticket small{color:var(--gris)}.ticket-tools{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}.ticket-tools .b.danger{color:#b42318;border-color:#d94a4a}.ticket-tools .b.danger:hover{background:#fff1f0}.ticket-section-title{font-size:1.08rem;margin:22px 0 8px;padding-bottom:8px;border-bottom:1px solid var(--ligne)}.ticket-category{border:1px solid var(--ligne);border-radius:9px;margin:12px 0;padding:0 12px 8px}.ticket-category>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;font-weight:700;color:var(--bleu);cursor:pointer;list-style:none}.ticket-category[open]>summary{border-bottom:1px solid var(--ligne)}.ticket-category .ticket{margin:10px 0}.ticket-demo{border:1px dashed var(--bleu);background:var(--lav);border-radius:8px;padding:14px;margin-top:14px}.ticket-demo .ticket{border-style:dashed}.demo-badge{font-size:.75rem;font-weight:800;color:var(--bleu);text-transform:uppercase;letter-spacing:.04em}
+.bad{color:#c9191e;font-weight:600}
+@media(max-width:800px){.lay{grid-template-columns:1fr}aside{position:static;max-height:none;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));align-items:start}}
+.me-chip{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.85rem}
+.me-av{width:28px;height:28px;border-radius:50%;object-fit:cover;background:var(--bleu);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.7rem;flex:none}
+:root[data-theme=dark] .me-av{color:#000}
+</style>
+<script>window.LGP_ADMIN=true</script>
+<script src="assets/js/site.js"></script>
+  <link rel="stylesheet" href="assets/css/site-refresh.css">
+<script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body class="admin-panel">
+<div id="gate" style="max-width:560px;margin:80px auto;padding:0 24px" hidden></div>
+<div id="app" hidden>
+  <div class="top"><div class="in">
+    <h1>Panneau d'administration</h1>
+    <span class="me-chip" id="me"></span>
+    <a class="b" href="index.html" style="text-decoration:none">← Retour au site</a>
+    <a class="b" href="dashboard.html" style="text-decoration:none">← Mon espace</a>
+    <a class="b" href="panel-prefectoral.html" style="text-decoration:none">← Panel Préfectoral</a>
+    <button class="b" id="im">Importer</button>
+    <button class="b" id="rs">Abandonner le brouillon</button>
+    <button class="b p" id="rf" type="button">Actualiser</button>
+    <button class="b p" id="ex">Télécharger content.json</button>
+    <input type="file" id="fi" accept=".json,application/json" hidden>
+  </div>
+  <div class="note" id="st">Tes modifications sont enregistrées en brouillon dans ce navigateur. Pour les publier : télécharge <b>content.json</b> et remplace celui de ton site (même dossier que index.html).</div></div>
+  <div class="lay"><aside id="nav"></aside><main id="pane"></main></div>
+</div>
+
+<script src="assets/js/auth.js"></script>
+<script>
+/* ===== À CONFIGURER ===== */
+const PAGES = [["index","Accueil"],["presentation","Présentation"],["demarche","Démarches en ligne"],["wiki","Wiki"],["emplois","Nos emplois"],["actus","Suivre l'actu"],["contact","Nous contacter"],["connexion","Connexion"]];
+/* Démarches proposées dans « Tests des formulaires » (menu déroulant).
+   Quand tu crées une nouvelle démarche, ajoute simplement une ligne ici. */
+const TEST_PROCEDURES = ["Création d'entreprise","Demande de subvention(s)","Création d'association","Demande de changement de nom","Déclarer une manifestation","Prise de rendez-vous","Donation service public","Mise au point entreprise"];
+
+try{const t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+const S=SITE,$=s=>document.querySelector(s);
+const E=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const gate=(h)=>{const g=$("#gate");g.hidden=false;g.innerHTML=h};
+const u=getUser();
+if(!u) location.replace("connexion.html");
+else if(!isSiteAdmin(u)){
+  gate('<h2>Accès réservé</h2><p style="margin:12px 0">L’accès à l’administration est réservé aux membres portant le rôle Discord Staff. Vérifie que tu es connecté avec le bon compte.</p><p style="margin-top:16px"><a href="index.html" style="text-decoration:underline">Retour au site</a></p>');
+}else start();
+
+async function start(){
+  $("#app").hidden=false;
+  const myId=String(u.id||u.discord_id||u.user_id||"");
+  const myName=u.nick||u.nickname||(u.member&&u.member.nick)||u.global_name||u.username||u.name||"Admin";
+  const myAvatar=(()=>{const a=u.avatar||u.avatar_url||"";if(/^https:/.test(a))return a;return a&&myId?"https://cdn.discordapp.com/avatars/"+myId+"/"+a+".png?size=64":""})();
+  const chip=$("#me"),fallback=E("span","me-av",(myName.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("")||"?").toUpperCase());
+  if(myAvatar){const img=E("img","me-av");img.src=myAvatar;img.alt="";img.onerror=()=>img.replaceWith(fallback);chip.append(img)}else chip.append(fallback);
+  chip.append(E("span","",myName));
+  let base={},dr=null;
+  try{const r=await fetch("content.json?v="+Date.now(),{cache:"no-store"});if(r.ok)base=await r.json()}catch(e){}
+  try{dr=JSON.parse(localStorage.getItem("lgp_admin_draft"))}catch(e){}
+  /* Le brouillon local ne l'emporte que s'il est plus récent que le content.json publié */
+  const tBase=Date.parse(base.updated||"")||0,tDraft=Date.parse(dr&&dr.updated||"")||0;
+  if(dr&&tBase&&tBase>=tDraft){try{localStorage.removeItem("lgp_admin_draft")}catch(e){}dr=null}
+  const D=Object.assign({texts:{}},dr||base);
+  D.urgent=Object.assign({},S.defaults.urgent,D.urgent);
+  D.jobs=D.jobs||JSON.parse(JSON.stringify(S.defaults.jobs));
+  D.ticketMotifs=Array.isArray(D.ticketMotifs)?D.ticketMotifs.slice():S.defaults.ticketMotifs.slice();
+  D.actus=Array.isArray(D.actus)?D.actus.slice():[];
+  D.presentation=Object.assign({},JSON.parse(JSON.stringify(S.defaults.presentation)),D.presentation||{});
+  ["introParagraphs","missionItems","missionDetails","values","command"].forEach(key=>{if(!Array.isArray(D.presentation[key]))D.presentation[key]=JSON.parse(JSON.stringify(S.defaults.presentation[key]))});
+  D.salaryLabel=D.salaryLabel||S.defaults.salaryLabel;
+  D.texts=D.texts||{};
+
+  const F={},SH=[],seen=new Set(),missing=[];
+  await Promise.all(PAGES.map(async([p])=>{try{
+    const r=await fetch(p+".html",{cache:"no-cache"});if(!r.ok)throw 0;
+    F[p]=S.scan(new DOMParser().parseFromString(await r.text(),"text/html"),p);
+  }catch(e){missing.push(p)}}));
+  PAGES.forEach(([p])=>(F[p]||[]).forEach(f=>{if(f.scope==="shared"&&!seen.has(f.key)){seen.add(f.key);SH.push(f)}}));
+  const of=k=>k==="shared"?SH:(F[k]||[]).filter(f=>f.scope!=="shared");
+  const KIND={H1:"Titre",H2:"Titre",H3:"Sous-titre",H4:"Rubrique",P:"Paragraphe",A:"Lien",BUTTON:"Bouton",LI:"Liste"};
+  let view="urgent";
+
+  const save=()=>{try{D.updated=new Date().toISOString();localStorage.setItem("lgp_admin_draft",JSON.stringify(D))}catch(e){}
+    $("#st").innerHTML="Brouillon enregistré à "+new Date().toLocaleTimeString("fr-FR")+" — <b>pas encore publié</b> : télécharge content.json et remplace celui de ton site."};
+  const nav=()=>{const n=$("#nav");n.textContent="";
+    const groups=[
+      ["Vue d'ensemble",[["urgent","Bandeau urgent"],["jobs","Liste des emplois"],["actualites","Actualités"],["presentationData","Présentation"]]],
+      ["Outils et réglages",[["testForms","Tests des formulaires"],["motifs","Motifs de la demande"],["shared","Menu & pied de page"]]],
+      ["Pages du site",PAGES.filter(p=>F[p[0]]).map(p=>[p[0],p[1]])],
+    ];
+    groups.forEach(([title,items])=>{if(!items.length)return;const group=E("section","nav-group"),heading=E("h2","nav-group-title",title),links=E("div","nav-group-items");
+      items.forEach(x=>{const b=E("button","nv"+(x[0]===view?" on":""),x[1]);b.type="button";
+        const c=(x[0]==="urgent"||x[0]==="jobs"||x[0]==="motifs"||x[0]==="actualites"||x[0]==="presentationData")?0:of(x[0]).filter(f=>D.texts[f.key]!=null).length;
+        if(c)b.append(E("i","",c));b.onclick=()=>{view=x[0];nav();draw()};links.append(b)});
+      group.append(heading,links);n.append(group)});
+    if(missing.length){const m=E("p","bad","Pages introuvables : "+missing.join(", "));m.style.cssText="font-size:.78rem;margin-top:12px;padding:0 14px";n.append(m)}};
+
+  const field=(g,lab,obj,key,type)=>{const w=E("div","g"+(type==="checkbox"?" c":"")),l=E("label","",lab);let i;
+    if(type==="select"||type==="availability"){i=E("select");const options=type==="availability"?[["","À définir"],["Disponible","Disponible"],["Indisponible","Indisponible"]]:[["red","Urgent (rouge)"],["blue","Information (bleu)"],["yellow","Attention (jaune)"]];options.forEach(o=>{const op=E("option","",o[1]);op.value=o[0];i.append(op)});i.value=obj[key]||""}
+    else if(type==="area"){i=E("textarea");i.rows=3;i.value=obj[key]||""}
+    else if(type==="checkbox"){i=E("input");i.type="checkbox";i.checked=!!obj[key];l.prepend(i)}
+    else{i=E("input");i.type=type==="date"?"date":"text";i.value=obj[key]||""}
+    i.oninput=i.onchange=()=>{obj[key]=type==="checkbox"?i.checked:i.value;save();g.upd&&g.upd()};
+    w.append(l);if(type!=="checkbox")w.append(i);g.append(w)};
+
+  const drawUrgent=p=>{
+    p.append(E("h2","","Bandeau Urgent"),E("p","sub","Affiché sous l'en-tête, sur toutes les pages qui chargent site.js."));
+    const pv=E("div","pv"),c=D.urgent,g=E("div");
+    g.upd=()=>{pv.textContent="";pv.append(S.urgentEl(Object.assign({},c,{closable:false})))};
+    field(g,"Afficher le bandeau",c,"enabled","checkbox");field(g,"Style",c,"theme","select");
+    field(g,"Étiquette (laisser vide pour aucune)",c,"tag");field(g,"Message",c,"text","area");
+    field(g,"Texte du lien",c,"linkText");field(g,"Adresse du lien (https://…)",c,"linkUrl");
+    field(g,"Le visiteur peut fermer le bandeau",c,"closable","checkbox");
+    p.append(E("label","","Aperçu"),pv,g);g.upd()};
+
+  const drawJobs=p=>{
+    p.append(E("h2","","Liste des emplois"),E("p","sub","Postes affichés sur la page Nos emplois."));
+    const g=E("div");field(g,"Libellé du salaire",D,"salaryLabel");p.append(g);
+    const box=E("div");p.append(box);
+    const mv=(i,d)=>{const j=i+d;if(j<0||j>=D.jobs.length)return;[D.jobs[i],D.jobs[j]]=[D.jobs[j],D.jobs[i]];save();dj()};
+    const dj=()=>{box.textContent="";D.jobs.forEach((j,i)=>{const c=E("div","job");
+      field(c,"Titre du poste",j,"titre");field(c,"Disponibilité du poste",j,"disponibilite","availability");field(c,"Mention au-dessus du salaire (facultative)",j,"mention");field(c,"Salaire",j,"salaire");field(c,"Description",j,"texte","area");
+      const r=E("div","r");
+      [["↑",()=>mv(i,-1)],["↓",()=>mv(i,1)],["Supprimer",()=>{if(confirm("Supprimer « "+j.titre+" » ?")){D.jobs.splice(i,1);save();dj()}}]].forEach(([t,f])=>{const b=E("button","b",t);b.type="button";b.onclick=f;r.append(b)});
+      c.append(r);box.append(c)});
+      const a=E("button","b p","Ajouter un poste");a.type="button";a.onclick=()=>{D.jobs.push({titre:"Nouveau poste",salaire:"",texte:""});save();dj()};box.append(a)};
+    dj()};
+
+  const drawMotifs=p=>{
+    p.append(E("h2","","Motifs de la demande"),E("p","sub","Ces choix apparaissent dans le formulaire « Nous contacter »."));
+    const box=E("div");p.append(box);
+    const render=()=>{
+      box.textContent="";
+      D.ticketMotifs.forEach((motif,i)=>{
+        const row=E("div","job"),label=E("label","","Motif "+(i+1)),input=E("input");
+        input.type="text";input.value=motif;input.maxLength=80;input.setAttribute("aria-label","Motif "+(i+1));
+        input.oninput=()=>{D.ticketMotifs[i]=input.value;save()};
+        const remove=E("button","b","Supprimer");remove.type="button";remove.onclick=()=>{D.ticketMotifs.splice(i,1);save();render()};
+        row.append(label,input,remove);box.append(row);
+      });
+      const add=E("button","b p","Ajouter un motif");add.type="button";add.onclick=()=>{D.ticketMotifs.push("Nouveau motif");save();render()};box.append(add);
+    };
+    render();
+  };
+
+  const drawActus=p=>{
+    p.append(E("h2","","Actualités"),E("p","sub","Ces publications apparaissent sur la page « Suivre l'actu » et les trois plus récentes sur l'accueil."));
+    const box=E("div");p.append(box);
+    const move=(i,d)=>{const j=i+d;if(j<0||j>=D.actus.length)return;[D.actus[i],D.actus[j]]=[D.actus[j],D.actus[i]];save();render()};
+    const render=()=>{
+      box.textContent="";
+      D.actus.forEach((item,i)=>{
+        const card=E("div","job");
+        item.documents=Array.isArray(item.documents)?item.documents:[];
+        item.photos=Array.isArray(item.photos)?item.photos:[];
+        field(card,"Date de publication",item,"date","date");
+        field(card,"Titre",item,"titre");
+        field(card,"Résumé (affiché sur l'accueil)",item,"resume","area");
+        field(card,"Contenu de l'actualité",item,"texte","area");
+        const docs=E("div"),docsTitle=E("label","","Documents joints"),docsHelp=E("small","sub","PDF, Word, OpenDocument ou texte — 1 Mo maximum par fichier, 2 Mo au total avec les photos. Les fichiers seront inclus dans content.json.");
+        const picker=E("input");picker.type="file";picker.multiple=true;picker.accept=".pdf,.doc,.docx,.odt,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text,text/plain";
+        docs.append(docsTitle,docsHelp,picker);
+        item.documents.forEach((doc,docIndex)=>{
+          const line=E("div","r"),name=E("span","",doc.name||"Document");name.style.cssText="align-self:center;overflow-wrap:anywhere";
+          const preview=E("div");preview.hidden=true;preview.style.cssText="margin-top:10px;border:1px solid var(--ligne);padding:8px;max-width:100%";
+          const show=E("button","b","Visualiser");show.type="button";show.setAttribute("aria-expanded","false");show.onclick=()=>{
+            preview.hidden=!preview.hidden;show.textContent=preview.hidden?"Visualiser":"Masquer l'aperçu";show.setAttribute("aria-expanded",String(!preview.hidden));
+            if(!preview.hidden&&!preview.childElementCount){
+              if(doc.type==="application/pdf"||doc.type==="text/plain"){
+                const frame=E("iframe");frame.src=doc.data;frame.title="Aperçu de "+(doc.name||"document");frame.style.cssText="display:block;width:min(100%,760px);height:480px;border:0";preview.append(frame);
+              }else preview.append(E("p","sub","L'aperçu intégré n'est pas disponible pour ce format. Télécharge le fichier pour le consulter."));
+            }
+          };
+          const remove=E("button","b","Retirer");remove.type="button";remove.onclick=()=>{item.documents.splice(docIndex,1);save();render()};
+          line.append(name,show,remove);docs.append(line,preview);
+        });
+        picker.onchange=async()=>{
+          const files=[...picker.files];picker.value="";
+          const used=D.actus.reduce((sum,actu)=>sum+[...(actu.documents||[]),...(actu.photos||[])].reduce((n,file)=>n+(Number(file.size)||0),0),0);
+          let added=0;
+          for(const file of files){
+            if(file.size>1024*1024){alert("« "+file.name+" » dépasse la limite de 1 Mo.");continue}
+            if(used+added+file.size>2*1024*1024){alert("La limite totale de 2 Mo de documents joints est atteinte.");break}
+            try{
+              const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file)});
+              item.documents.push({name:file.name,type:file.type||"application/octet-stream",size:file.size,data});added+=file.size;
+            }catch(e){alert("Impossible de lire « "+file.name+" ».")}
+          }
+          if(added){save();render()}
+        };
+        card.append(docs);
+        const photos=E("div"),photosTitle=E("label","","Photos de l'actualité"),photosHelp=E("small","sub","Formats JPG, PNG, GIF ou WebP — 1 Mo maximum par photo, 2 Mo au total avec les documents.");
+        const photoPicker=E("input");photoPicker.type="file";photoPicker.multiple=true;photoPicker.accept=".jpg,.jpeg,.png,.gif,.webp,image/jpeg,image/png,image/gif,image/webp";
+        photos.append(photosTitle,photosHelp,photoPicker);
+        item.photos.forEach((photo,photoIndex)=>{
+          const line=E("div","r"),img=E("img");img.src=photo.data;img.alt=photo.name||"Photo de l'actualité";img.style.cssText="width:96px;height:64px;object-fit:cover;border-radius:4px";
+          const name=E("span","",photo.name||"Photo");name.style.cssText="align-self:center;overflow-wrap:anywhere;margin-right:auto";
+          const remove=E("button","b","Retirer");remove.type="button";remove.onclick=()=>{item.photos.splice(photoIndex,1);save();render()};line.append(img,name,remove);photos.append(line);
+        });
+        photoPicker.onchange=async()=>{
+          const files=[...photoPicker.files];photoPicker.value="";
+          const used=D.actus.reduce((sum,actu)=>sum+[...(actu.documents||[]),...(actu.photos||[])].reduce((n,file)=>n+(Number(file.size)||0),0),0);
+          let added=0;
+          for(const file of files){
+            if(!/^image\/(jpeg|png|gif|webp)$/.test(file.type)){alert("« "+file.name+" » n'est pas au format JPG, PNG, GIF ou WebP.");continue}
+            if(file.size>1024*1024){alert("« "+file.name+" » dépasse la limite de 1 Mo.");continue}
+            if(used+added+file.size>2*1024*1024){alert("La limite totale de 2 Mo de documents et photos est atteinte.");break}
+            try{
+              const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file)});
+              item.photos.push({name:file.name,type:file.type,size:file.size,data});added+=file.size;
+            }catch(e){alert("Impossible de lire « "+file.name+" ».")}
+          }
+          if(added){save();render()}
+        };
+        card.append(photos);
+        const row=E("div","r");
+        [["↑",()=>move(i,-1)],["↓",()=>move(i,1)],["Supprimer",()=>{if(confirm("Supprimer cette actualité ?")){D.actus.splice(i,1);save();render()}}]].forEach(([label,fn])=>{const b=E("button","b",label);b.type="button";b.onclick=fn;row.append(b)});
+        card.append(row);box.append(card);
+      });
+      const add=E("button","b p","Ajouter une actualité");add.type="button";add.onclick=()=>{D.actus.unshift({date:new Date().toISOString().slice(0,10),titre:"Nouvelle actualité",resume:"",texte:"",documents:[],photos:[]});save();render()};box.append(add);
+    };
+    render();
+  };
+
+  const drawPresentation=p=>{
+    const c=D.presentation;
+    p.append(E("h2","","Présentation du site"),E("p","sub","Modifie ici les textes, les missions, les valeurs, la chaîne de commandement, les images et la vidéo de la page Présentation. Les images sont incluses dans content.json : 600 Ko maximum chacune, 1 Mo au total."));
+    field(p,"Titre principal",c,"introTitle");field(p,"Titre de la liste des missions",c,"missionsTitle");field(p,"Titre des accordéons",c,"accordionTitle");field(p,"Titre des valeurs",c,"valuesTitle");field(p,"Titre de l'organigramme",c,"commandTitle");
+    const paragraphs=E("div");p.append(E("h3","","Texte de présentation"),paragraphs);
+    const renderParagraphs=()=>{paragraphs.textContent="";c.introParagraphs.forEach((text,i)=>{const row=E("div","job"),label=E("label","","Paragraphe "+(i+1)),area=E("textarea");area.rows=3;area.value=text;area.oninput=()=>{c.introParagraphs[i]=area.value;save()};row.append(label,area);
+      const controls=E("div","r"),move=(dir)=>{const j=i+dir;if(j<0||j>=c.introParagraphs.length)return;[c.introParagraphs[i],c.introParagraphs[j]]=[c.introParagraphs[j],c.introParagraphs[i]];save();renderParagraphs()};
+      [["↑",()=>move(-1)],["↓",()=>move(1)],["Supprimer",()=>{c.introParagraphs.splice(i,1);save();renderParagraphs()}]].forEach(([label,fn])=>{const b=E("button","b",label);b.type="button";b.onclick=fn;controls.append(b)});row.append(controls);paragraphs.append(row)});
+      const add=E("button","b","Ajouter un paragraphe");add.type="button";add.onclick=()=>{c.introParagraphs.push("");save();renderParagraphs()};paragraphs.append(add)};
+    renderParagraphs();
+
+    const media=E("div","job");media.append(E("h3","","Images"),E("p","sub","Ajoute le logo du ministère et la photo du bâtiment. Formats PNG, JPG et WebP."));
+    const renderMedia=()=>{
+      media.querySelectorAll(".media-field").forEach(el=>el.remove());
+      [["Logo du ministère","ministryLogo","Logo institutionnel"],["Photo du bâtiment","buildingPhoto","Photo de la Préfecture"]].forEach(([label,key,alt])=>{
+        const group=E("div","g media-field"),title=E("label","",label),input=E("input"),preview=E("div");input.type="file";input.accept="image/png,image/jpeg,image/webp";
+        group.append(title,input);
+        if(c[key]){const img=E("img");img.src=c[key];img.alt=alt;img.style.cssText="display:block;max-width:100%;max-height:220px;object-fit:contain;margin:10px 0";group.append(img);const remove=E("button","b","Retirer l'image");remove.type="button";remove.onclick=()=>{c[key]="";c[key+"Size"]=0;save();renderMedia()};group.append(remove)}
+        input.onchange=async()=>{const file=input.files&&input.files[0];if(!file)return;if(!/^image\/(png|jpeg|webp)$/.test(file.type)){alert("Choisis une image PNG, JPG ou WebP.");input.value="";return}if(file.size>600*1024){alert("L'image ne doit pas dépasser 600 Ko.");input.value="";return}const total=(Number(c.ministryLogoSize)||0)+(Number(c.buildingPhotoSize)||0)-(Number(c[key+"Size"])||0);if(total+file.size>1024*1024){alert("Les deux images de présentation ne peuvent pas dépasser 1 Mo au total.");input.value="";return}try{c[key]=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file)});c[key+"Size"]=file.size;save();renderMedia()}catch(e){alert("Impossible de lire cette image.")}};
+        media.append(group);
+      });
+    };
+    p.append(media);renderMedia();
+
+    field(p,"Lien YouTube de la vidéo (facultatif)",c,"videoUrl");
+    const addStringList=(heading,key)=>{
+      const section=E("div"),rows=E("div");section.append(E("h3","",heading),rows);p.append(section);
+      const render=()=>{rows.textContent="";c[key].forEach((value,i)=>{const row=E("div","job"),label=E("label","",heading+" "+(i+1)),area=E("textarea");area.rows=2;area.value=value;area.oninput=()=>{c[key][i]=area.value;save()};row.append(label,area);
+        const controls=E("div","r"),move=dir=>{const j=i+dir;if(j<0||j>=c[key].length)return;[c[key][i],c[key][j]]=[c[key][j],c[key][i]];save();render()};
+        [["↑",()=>move(-1)],["↓",()=>move(1)],["Supprimer",()=>{c[key].splice(i,1);save();render()}]].forEach(([text,fn])=>{const b=E("button","b",text);b.type="button";b.onclick=fn;controls.append(b)});row.append(controls);rows.append(row)});
+        const add=E("button","b","Ajouter");add.type="button";add.onclick=()=>{c[key].push("");save();render()};rows.append(add)};render();
+    };
+    addStringList("Mission","missionItems");
+    const addObjectList=(heading,key,fields,makeDefault)=>{
+      const section=E("div"),rows=E("div");section.append(E("h3","",heading),rows);p.append(section);
+      const render=()=>{rows.textContent="";c[key].forEach((item,i)=>{const row=E("div","job");fields.forEach(([label,name,type])=>field(row,label,item,name,type));const controls=E("div","r"),move=dir=>{const j=i+dir;if(j<0||j>=c[key].length)return;[c[key][i],c[key][j]]=[c[key][j],c[key][i]];save();render()};
+        [["↑",()=>move(-1)],["↓",()=>move(1)],["Supprimer",()=>{c[key].splice(i,1);save();render()}]].forEach(([text,fn])=>{const b=E("button","b",text);b.type="button";b.onclick=fn;controls.append(b)});row.append(controls);rows.append(row)});
+        const add=E("button","b","Ajouter");add.type="button";add.onclick=()=>{c[key].push(makeDefault());save();render()};rows.append(add)};render();
+    };
+    addObjectList("Accordéons : missions détaillées","missionDetails",[["Titre","titre"],["Description","texte","area"]],()=>({titre:"Nouvelle mission",texte:""}));
+    addObjectList("Valeurs","values",[["Titre","titre"],["Description","texte","area"]],()=>({titre:"Nouvelle valeur",texte:""}));
+    addObjectList("Chaîne de commandement","command",[["Fonction","fonction"],["Nom","nom"]],()=>({fonction:"Nouvelle fonction",nom:""}));
+  };
+
+  /* Outils partagés avec « Tests des formulaires » */
+  const showTicketAttachments=(container,attachments)=>{(attachments||[]).forEach(file=>{if(!file?.data||!file?.name)return;const link=E("a","",`📎 ${file.name}`);link.href=file.data;link.download=file.name;link.target="_blank";link.rel="noopener noreferrer";link.style.cssText="display:block;margin-top:6px;color:var(--bleu);overflow-wrap:anywhere";container.append(link)})};
+  const readTicketAttachments=files=>Promise.all([...files].map(file=>{if(file.size>1024*1024)throw new Error("Chaque pièce jointe doit faire 1 Mo maximum.");if(!["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","image/jpeg","image/png","image/webp","text/plain"].includes(file.type))throw new Error("Format de pièce jointe non accepté.");return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve({name:file.name,type:file.type,size:file.size,data:reader.result});reader.onerror=()=>reject(new Error("Impossible de lire une pièce jointe."));reader.readAsDataURL(file)})})).then(items=>{if(items.reduce((sum,item)=>sum+item.size,0)>2.5*1024*1024)throw new Error("La taille totale des pièces jointes ne peut pas dépasser 2,5 Mo.");return items});
+  const ticketCard=(ticket,{demo=false,call=null,reload=null}={})=>{
+    const card=E("details","ticket ticket-card"),summary=E("summary"),main=E("div","ticket-summary-main");
+    const heading=E("strong","",ticket.subject?.replace(/^Démarche en ligne — /,"Démarche : ")||"Demande sans objet");
+    const meta=E("div","ticket-summary-meta");
+    meta.append(E("span","","Réf. "+(ticket.reference||"—")),E("span","",ticket.requester_name||"Demandeur inconnu"),E("span","",ticket.discord_username||""),E("span","",new Date(ticket.created_at||Date.now()).toLocaleString("fr-FR")));
+    main.append(heading,meta);summary.append(main);if(ticket.is_test)summary.append(E("span","demo-badge","TEST"));summary.append(E("span","ticket-status"+(ticket.status==="Fermé"?" closed":""),ticket.status||"Ouvert"));card.append(summary);
+    const body=E("div","ticket-content");
+    body.append(E("div","ticket-head",ticket.motif+" · "+(ticket.phone?"Téléphone : "+ticket.phone:"Aucun téléphone renseigné")));
+    (ticket.messages||[]).forEach(message=>{
+      const staff=message.sender==="prefecture",row=E("div","ticket-message"+(staff?" staff":"")),header=E("div","ticket-message-head");
+      header.append(E("span","",(staff?"Réponse de la Préfecture":"Message du demandeur")+(message.author?" · "+message.author:"")),E("span","",message.createdAt?new Date(message.createdAt).toLocaleString("fr-FR"):""));
+      row.append(header,E("div","ticket-message-text",message.text||"(Message vide)"));showTicketAttachments(row,message.attachments);body.append(row);
+    });
+    if(ticket.status==="Ouvert"&&!demo&&call){
+      const area=E("textarea");area.placeholder="Rédige une réponse claire…";area.setAttribute("aria-label","Réponse au demandeur");
+      const picker=E("input");picker.type="file";picker.multiple=true;picker.accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp,text/plain";
+      const hint=E("small","sub","Pièces jointes : PDF, Word, JPG, PNG, WebP ou TXT — 1 Mo par fichier, 2,5 Mo au total.");
+      const actions=E("div","ticket-tools"),send=E("button","b p","Envoyer la réponse");send.type="button";
+      send.onclick=async()=>{if(!area.value.trim()&&!picker.files.length)return;send.disabled=true;try{const attachments=await readTicketAttachments(picker.files);const result=await call("POST",{reference:ticket.reference,text:area.value,attachments});if(!result.discordNotified)alert("Réponse enregistrée sur le site. Discord n’a pas reçu sa notification.");await reload()}catch(error){alert("Impossible d’enregistrer la réponse : "+error.message);send.disabled=false}};
+      const close=E("button","b","Clôturer cette demande");close.type="button";close.onclick=async()=>{if(!confirm("Clôturer la demande "+ticket.reference+" ?"))return;close.disabled=true;try{await call("PATCH",{reference:ticket.reference});await reload()}catch(error){alert("Impossible de clôturer : "+error.message);close.disabled=false}};
+      actions.append(send,close);body.append(area,hint,picker,actions);
+    }
+    if(!demo&&call){
+      const del=E("button","b danger","Supprimer cette demande");del.type="button";
+      del.onclick=async()=>{if(!confirm("Supprimer définitivement la demande "+ticket.reference+" ? Elle disparaîtra aussi de « Mes démarches » chez le demandeur. Action irréversible."))return;del.disabled=true;try{await call("DELETE",{reference:ticket.reference});await reload()}catch(error){alert("Impossible de supprimer : "+error.message);del.disabled=false}};
+      const wrap=E("div","ticket-tools");wrap.append(del);body.append(wrap);
+    }
+    if(!demo&&!ticket.discord_notified)body.append(E("p","bad","Notification Discord non délivrée. La demande reste conservée sur le site."));
+    if(demo)body.prepend(E("p","demo-badge","Simulation locale · rien n’est enregistré ni envoyé"));
+    card.append(body);if(demo)card.open=true;return card;
+  };
+
+  const drawFormTests=p=>{
+    p.append(E("h2","","Tests des formulaires"),E("p","sub","Chaque bouton crée un vrai ticket marqué TEST et l’envoie au webhook du motif. Le demandeur, le sujet, le message Discord et le fil de création d’entreprise portent tous cette mention."));
+    const controls=E("div","ticket-tools"),motif=E("select"),sendContact=E("button","b p","Envoyer le test de contact"),procControls=E("div","ticket-tools"),procedure=E("select"),sendProcedure=E("button","b p","Envoyer le test de la démarche"),status=E("p","sub"),history=E("div");
+    (D.ticketMotifs||[]).filter(item=>item!=="Déclaration / démarche").forEach(item=>motif.add(new Option(item,item)));
+    TEST_PROCEDURES.forEach(name=>procedure.add(new Option(name,name)));
+    motif.setAttribute("aria-label","Motif du test de contact");procedure.setAttribute("aria-label","Démarche à tester");
+    motif.style.maxWidth=procedure.style.maxWidth="340px";
+    sendContact.type=sendProcedure.type="button";
+    controls.append(motif,sendContact);procControls.append(procedure,sendProcedure);
+    p.append(E("h3","ticket-section-title","Formulaire de contact"),controls,E("h3","ticket-section-title","Démarches en ligne"),procControls,status,E("h3","ticket-section-title","Demandes de test récentes"),history);
+    const api=async(method,body)=>{const response=await fetch("/api/admin/tickets",{method,headers:{Authorization:"Bearer "+u.token,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||String(response.status));return data};
+    const refreshHistory=async()=>{history.textContent="Chargement…";try{const tickets=await api("GET"),tests=tickets.filter(item=>item.is_test).slice(0,20);history.textContent="";if(!tests.length){history.append(E("p","sub","Aucun test envoyé pour le moment."));return}tests.forEach(ticket=>history.append(ticketCard(ticket,{call:api,reload:refreshHistory})))}catch(error){history.textContent="Impossible de charger l’historique des tests : "+error.message}};
+    const sendTest=async(button,testForm,selectedMotif,procedureName)=>{button.disabled=true;status.className="sub";status.textContent="Envoi du test au webhook…";try{const result=await api("POST",{testForm,motif:selectedMotif,procedureName});status.className=result.discordNotified?"sub":"bad";status.textContent=result.discordNotified?"Test envoyé au webhook · Référence : "+result.reference:"Ticket de test créé ("+result.reference+") mais Discord n’a pas reçu l’envoi. Vérifie le webhook Vercel du motif.";await refreshHistory()}catch(error){status.className="bad";status.textContent="Échec du test : "+error.message}finally{button.disabled=false}};
+    sendContact.onclick=()=>sendTest(sendContact,"contact",motif.value||"Support technique");
+    sendProcedure.onclick=()=>sendTest(sendProcedure,"procedure",undefined,procedure.value);
+    refreshHistory();
+  };
+
+  const drawFields=(p,k)=>{
+    p.append(E("h2","",k==="shared"?"Menu & pied de page":"Page : "+PAGES.find(x=>x[0]===k)[1]),
+      E("p","sub",k==="shared"?"Ces textes sont communs à toutes les pages.":"Mise en forme : **gras**, [texte du lien](adresse). Un retour à la ligne reste un retour à la ligne."));
+    const fs=of(k),q=E("input");q.type="search";q.placeholder="Rechercher un texte…";const box=E("div");p.append(q,box);
+    const dr=()=>{box.textContent="";const s=q.value.toLowerCase();
+      fs.forEach(f=>{const cur=D.texts[f.key]??f.def;if(s&&!(cur+f.def).toLowerCase().includes(s))return;
+        const r=E("div","f"+(D.texts[f.key]!=null?" mod":"")),l=E("label","",KIND[f.tag]||"Texte"),t=E("textarea");
+        t.value=cur;t.rows=Math.min(8,cur.split("\n").length+Math.floor(cur.length/90));
+        t.oninput=()=>{if(t.value===f.def)delete D.texts[f.key];else D.texts[f.key]=t.value;r.classList.toggle("mod",t.value!==f.def);save();nav()};
+        const o=E("small","","Original : "+f.def.slice(0,100)+(f.def.length>100?"…":""));
+        r.append(l,t,o);
+        if(D.texts[f.key]!=null){const b=E("button","b","Rétablir l'original");b.type="button";b.style.marginTop="8px";b.onclick=()=>{delete D.texts[f.key];save();nav();dr()};r.append(b)}
+        box.append(r)});
+      if(!box.children.length)box.append(E("p","sub",fs.length?"Aucun résultat.":"Aucun texte trouvé sur cette page."))};
+    q.oninput=dr;dr()};
+
+  const draw=()=>{const p=$("#pane");p.textContent="";view==="urgent"?drawUrgent(p):view==="jobs"?drawJobs(p):view==="motifs"?drawMotifs(p):view==="actualites"?drawActus(p):view==="presentationData"?drawPresentation(p):view==="testForms"?drawFormTests(p):drawFields(p,view)};
+
+  $("#rf").onclick=()=>location.reload();
+  $("#ex").onclick=()=>{save();const a=E("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(Object.assign({version:1},D),null,2)],{type:"application/json"}));a.download="content.json";a.click()};
+  $("#im").onclick=()=>$("#fi").click();
+  $("#fi").onchange=async e=>{try{const d=JSON.parse(await e.target.files[0].text());localStorage.setItem("lgp_admin_draft",JSON.stringify(d));location.reload()}catch(x){alert("Fichier invalide.")}};
+  $("#rs").onclick=()=>{if(confirm("Abandonner le brouillon et revenir à la version publiée ?")){localStorage.removeItem("lgp_admin_draft");location.reload()}};
+  nav();draw();
+}
+</script>
+<script type="module">import { inject } from "https://esm.sh/@vercel/analytics"; inject();</script>
+<script src="/tracker.js" defer></script>
+</html>
+<script src="assets/js/reveal.js"></script>
+</body>
+</html>
